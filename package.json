@@ -1,7 +1,7 @@
 {
     "name": "gliko2.ts",
     "description": "Implementation of the Glicko2 algorithm in typescript",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "license": "MIT",
     "main": "dist/glicko2.js",
     "types": "dist/glicko2.d.ts",
