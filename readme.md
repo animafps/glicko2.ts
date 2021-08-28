@@ -1,16 +1,14 @@
 # glicko2.ts
 
-## Table of Contents
+## About
 
--   [About](#about)
--   [Installing](#installing)
--   [Usage](#usage)
+An Implementation of the Glicko-2 rating system in typescript. The Glicko-2 rating system is a method for assessing a player's strength in games of skill, such as chess and go. The algorithm is explained by its author, Mark E. Glickman, on http://glicko.net/glicko.html.
 
-## About <a name = "about"></a>
+Each player begins with a rating, a rating deviation (accuracy of the rating) and a volatility (speed of rating evolution). These values will evolve according to the outcomes of matches with other players.
 
-An Implementation of the glicko2 rating system in typescript. The glicko2 rating system are methods for assessing a player's strength in games of skill with a slight improvement over the traditional Elo system. This library is (almost) fully typed and written in typescript.
+This implementation is (almost) fully typed and written in typescript.
 
-## Installing <a name = "installing"></a>
+## Installing
 
 ### Node(npm/yarn)
 
@@ -28,8 +26,8 @@ yarn add glicko2.ts
 
 To install in a Deno environment you can use the package hosted at
 
-https://deno.land/x/glicko2/glicko2.ts
+https://denopkg.com/animafps/glicko2.ts/glicko2.ts
 
-## Usage <a name = "usage"></a>
+## Usage
 
 Documentation is still being written and will get it up soon
