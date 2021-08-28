@@ -17,13 +17,10 @@ jobs:
               uses: actions/setup-node@v1
               with:
                   node-version: "14"
-
-            - name: Install yarn
-              run: npm install -g yarn
             - name: Install dependencies
-              run: yarn
+              run: npm ci
             - name: Release
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: yarn semantic-release
+              run: npx semantic-release

@@ -1,7 +1,3 @@
-.yarn/
-.pnp.cjs
-.yarnrc.yml
-yarn.lock
 .editorconfig
 .eslintrc.json
 .vscode/
