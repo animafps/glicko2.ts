@@ -1,5 +1,5 @@
 {
-    "name": "gliko2.ts",
+    "name": "glicko2.ts",
     "description": "Implementation of the Glicko2 algorithm in typescript",
     "version": "0.1.0",
     "license": "MIT",
