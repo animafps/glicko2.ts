@@ -31,3 +31,7 @@ https://denopkg.com/animafps/glicko2.ts/glicko2.ts
 ## Usage
 
 Documentation is still being written and will get it up soon
+
+### API Docs
+
+[Modules](docs/modules.md)
