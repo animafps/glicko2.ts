@@ -54,7 +54,7 @@ The main class of the rating system
 
 #### Defined in
 
-[glicko2.ts:546](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L546)
+[glicko2.ts:546](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L546)
 
 ## Properties
 
@@ -64,7 +64,7 @@ The main class of the rating system
 
 #### Defined in
 
-[glicko2.ts:239](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L239)
+[glicko2.ts:239](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L239)
 
 ___
 
@@ -74,7 +74,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:240](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L240)
+[glicko2.ts:240](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L240)
 
 ___
 
@@ -84,7 +84,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:241](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L241)
+[glicko2.ts:241](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L241)
 
 ___
 
@@ -94,7 +94,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:238](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L238)
+[glicko2.ts:238](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L238)
 
 ___
 
@@ -119,7 +119,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:244](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L244)
+[glicko2.ts:244](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L244)
 
 ___
 
@@ -129,7 +129,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:245](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L245)
+[glicko2.ts:245](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L245)
 
 ___
 
@@ -139,7 +139,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:242](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L242)
+[glicko2.ts:242](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L242)
 
 ___
 
@@ -149,7 +149,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:243](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L243)
+[glicko2.ts:243](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L243)
 
 ___
 
@@ -161,7 +161,7 @@ Object of various algorithms that can be used by the ranking system
 
 #### Defined in
 
-[glicko2.ts:250](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L250)
+[glicko2.ts:250](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L250)
 
 ## Methods
 
@@ -184,7 +184,7 @@ Object of various algorithms that can be used by the ranking system
 
 #### Defined in
 
-[glicko2.ts:645](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L645)
+[glicko2.ts:645](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L645)
 
 ___
 
@@ -222,7 +222,7 @@ players must have ids, they are not created if it has been done already.
 
 #### Defined in
 
-[glicko2.ts:616](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L616)
+[glicko2.ts:616](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L616)
 
 ___
 
@@ -246,7 +246,7 @@ Add a match result to be taken in account for the new rankings calculation
 
 #### Defined in
 
-[glicko2.ts:698](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L698)
+[glicko2.ts:698](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L698)
 
 ___
 
@@ -260,7 +260,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:602](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L602)
+[glicko2.ts:602](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L602)
 
 ___
 
@@ -274,7 +274,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:594](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L594)
+[glicko2.ts:594](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L594)
 
 ___
 
@@ -290,7 +290,7 @@ A object with the player index id as the key and the Player object as the member
 
 #### Defined in
 
-[glicko2.ts:590](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L590)
+[glicko2.ts:590](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L590)
 
 ___
 
@@ -316,7 +316,7 @@ A Player object of the new player
 
 #### Defined in
 
-[glicko2.ts:641](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L641)
+[glicko2.ts:641](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L641)
 
 ___
 
@@ -336,7 +336,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:575](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L575)
+[glicko2.ts:575](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L575)
 
 ___
 
@@ -352,7 +352,7 @@ Removes all the players from the cache
 
 #### Defined in
 
-[glicko2.ts:582](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L582)
+[glicko2.ts:582](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L582)
 
 ___
 
@@ -372,4 +372,4 @@ ___
 
 #### Defined in
 
-[glicko2.ts:703](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L703)
+[glicko2.ts:703](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L703)

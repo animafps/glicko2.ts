@@ -24,4 +24,4 @@ Internal glicko2 parameter. "Reasonable choices are between 0.3 and 1.2, though 
 
 #### Defined in
 
-[glicko2.ts:6](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L6)
+[glicko2.ts:6](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L6)

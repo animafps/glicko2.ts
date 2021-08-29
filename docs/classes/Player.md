@@ -59,7 +59,7 @@ The class for a player object
 
 #### Defined in
 
-[glicko2.ts:69](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L69)
+[glicko2.ts:69](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L69)
 
 ## Properties
 
@@ -69,7 +69,7 @@ The class for a player object
 
 #### Defined in
 
-[glicko2.ts:60](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L60)
+[glicko2.ts:60](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L60)
 
 ___
 
@@ -79,7 +79,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:61](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L61)
+[glicko2.ts:61](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L61)
 
 ___
 
@@ -89,7 +89,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:62](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L62)
+[glicko2.ts:62](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L62)
 
 ___
 
@@ -99,7 +99,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:59](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L59)
+[glicko2.ts:59](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L59)
 
 ___
 
@@ -109,7 +109,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:63](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L63)
+[glicko2.ts:63](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L63)
 
 ___
 
@@ -119,7 +119,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:64](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L64)
+[glicko2.ts:64](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L64)
 
 ___
 
@@ -129,7 +129,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:66](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L66)
+[glicko2.ts:66](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L66)
 
 ___
 
@@ -139,7 +139,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:67](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L67)
+[glicko2.ts:67](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L67)
 
 ___
 
@@ -149,7 +149,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:65](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L65)
+[glicko2.ts:65](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L65)
 
 ___
 
@@ -174,7 +174,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:68](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L68)
+[glicko2.ts:68](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L68)
 
 ## Methods
 
@@ -197,7 +197,7 @@ The Glicko E function.
 
 #### Defined in
 
-[glicko2.ts:190](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L190)
+[glicko2.ts:190](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L190)
 
 ___
 
@@ -220,7 +220,7 @@ Calculation of the estimated improvement in rating (step 4 of the algorithm)
 
 #### Defined in
 
-[glicko2.ts:207](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L207)
+[glicko2.ts:207](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L207)
 
 ___
 
@@ -242,7 +242,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:199](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L199)
+[glicko2.ts:199](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L199)
 
 ___
 
@@ -258,7 +258,7 @@ Calculation of the estimated letiance of the player's rating based on game outco
 
 #### Defined in
 
-[glicko2.ts:177](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L177)
+[glicko2.ts:177](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L177)
 
 ___
 
@@ -292,7 +292,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:218](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L218)
+[glicko2.ts:218](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L218)
 
 ___
 
@@ -309,7 +309,7 @@ preRatingRD() -> None
 
 #### Defined in
 
-[glicko2.ts:170](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L170)
+[glicko2.ts:170](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L170)
 
 ___
 
@@ -330,7 +330,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:115](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L115)
+[glicko2.ts:115](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L115)
 
 ___
 
@@ -344,7 +344,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:77](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L77)
+[glicko2.ts:77](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L77)
 
 ___
 
@@ -365,7 +365,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:101](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L101)
+[glicko2.ts:101](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L101)
 
 ___
 
@@ -379,7 +379,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:85](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L85)
+[glicko2.ts:85](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L85)
 
 ___
 
@@ -393,7 +393,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:93](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L93)
+[glicko2.ts:93](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L93)
 
 ___
 
@@ -407,7 +407,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:162](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L162)
+[glicko2.ts:162](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L162)
 
 ___
 
@@ -427,7 +427,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:81](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L81)
+[glicko2.ts:81](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L81)
 
 ___
 
@@ -447,7 +447,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:89](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L89)
+[glicko2.ts:89](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L89)
 
 ___
 
@@ -467,7 +467,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:97](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L97)
+[glicko2.ts:97](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L97)
 
 ___
 
@@ -484,4 +484,4 @@ Follows the steps of the algorithm described at http://www.glicko.net/glicko/gli
 
 #### Defined in
 
-[glicko2.ts:125](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L125)
+[glicko2.ts:125](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L125)

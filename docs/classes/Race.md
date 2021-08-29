@@ -33,7 +33,7 @@ The class for a Race which is a match that includes more than 2 competitors
 
 #### Defined in
 
-[glicko2.ts:13](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L13)
+[glicko2.ts:13](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L13)
 
 ## Properties
 
@@ -43,7 +43,7 @@ The class for a Race which is a match that includes more than 2 competitors
 
 #### Defined in
 
-[glicko2.ts:12](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L12)
+[glicko2.ts:12](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L12)
 
 ## Methods
 
@@ -63,7 +63,7 @@ The class for a Race which is a match that includes more than 2 competitors
 
 #### Defined in
 
-[glicko2.ts:21](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L21)
+[glicko2.ts:21](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L21)
 
 ___
 
@@ -77,4 +77,4 @@ ___
 
 #### Defined in
 
-[glicko2.ts:17](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L17)
+[glicko2.ts:17](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L17)
