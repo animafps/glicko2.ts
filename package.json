@@ -27,13 +27,15 @@
         "ts-node": "^10.1.0",
         "typedoc": "^0.21.5",
         "typedoc-plugin-markdown": "^3.10.4",
-        "typescript": "^4.3.5"
+        "typescript": "^4.3.5",
+        "prettier": "^2.3.2"
     },
     "scripts": {
         "doc": "typedoc --out docs --readme none glicko2.ts",
         "prepare": "tsc",
         "lint": "eslint glicko2.ts",
-        "lint:fix": "eslint glicko2.ts --fix"
+        "lint:fix": "eslint glicko2.ts --fix",
+        "prettier": "prettier -c glicko2.ts"
     },
     "config": {
         "commitizen": {

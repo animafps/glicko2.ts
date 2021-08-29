@@ -26,7 +26,7 @@ yarn add glicko2.ts
 
 To install in a Deno environment you can use the package hosted at
 
-https://denopkg.com/animafps/glicko2.ts/glicko2.ts
+https://deno.land/x/glicko2/glicko2.ts
 
 ## Usage
 
