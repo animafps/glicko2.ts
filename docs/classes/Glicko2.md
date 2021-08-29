@@ -17,10 +17,8 @@ The main class of the rating system
 - [\_default\_vol](Glicko2.md#_default_vol)
 - [\_tau](Glicko2.md#_tau)
 - [\_volatilityAlgorithm](Glicko2.md#_volatilityalgorithm)
-- [player\_index](Glicko2.md#player_index)
 - [players](Glicko2.md#players)
 - [players\_index](Glicko2.md#players_index)
-- [volatilityAlgorithms](Glicko2.md#volatilityalgorithms)
 
 ### Methods
 
@@ -45,16 +43,16 @@ The main class of the rating system
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `settings` | `Object` |  |
-| `settings.rating?` | `number` | default rating |
-| `settings.rd?` | `number` | - |
-| `settings.tau?` | `number` | Internal glicko2 parameter. |
-| `settings.vol?` | `number` | - |
-| `settings.volatilityAlgorithm?` | `string` | - |
+| `settings` | `Object` | - |
+| `settings.rating` | `number` | Base rating  **`default`** 1500 |
+| `settings.rd` | `number` | Base rating deviation  **`default`** 350 |
+| `settings.tau` | `number` | The system constant, tau, which constrains the change in volatility over time, needs to be set prior to application of the system. Reasonable choices are between 0.3 and 1.2, though the system should be tested to decide which value results in greatest predictive accuracy. Smaller values of tau prevent the volatility measures from changing by large amounts, which in turn prevent enormous changes in ratings based on very improbable results. If the application of Glicko-2 is expected to involve extremely improbable collections of game outcomes, then tau should be set to a small value, even as small as, say, tau = 0.2  **`default`** 0.5 |
+| `settings.vol` | `number` | Base volatility The volatility measure indicates the degree of expected fluctuation in a player’s rating  **`default`** 0.06 |
+| `settings.volatilityAlgorithm` | ``"newProcedure"`` \| ``"oldProcedure"`` \| ``"newProcedure_mod"`` \| ``"oldProcedure_simple"`` | The algorithm to calculate the volatility  **`default`** "newProcedure" |
 
 #### Defined in
 
-[glicko2.ts:546](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L546)
+[glicko2.ts:539](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L539)
 
 ## Properties
 
@@ -64,7 +62,7 @@ The main class of the rating system
 
 #### Defined in
 
-[glicko2.ts:239](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L239)
+[glicko2.ts:530](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L530)
 
 ___
 
@@ -74,7 +72,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:240](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L240)
+[glicko2.ts:531](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L531)
 
 ___
 
@@ -84,7 +82,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:241](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L241)
+[glicko2.ts:532](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L532)
 
 ___
 
@@ -94,7 +92,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:238](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L238)
+[glicko2.ts:529](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L529)
 
 ___
 
@@ -119,17 +117,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:244](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L244)
-
-___
-
-### player\_index
-
-• **player\_index**: `number` = `0`
-
-#### Defined in
-
-[glicko2.ts:245](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L245)
+[glicko2.ts:538](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L538)
 
 ___
 
@@ -139,7 +127,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:242](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L242)
+[glicko2.ts:533](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L533)
 
 ___
 
@@ -147,21 +135,11 @@ ___
 
 • **players\_index**: `number` = `0`
 
-#### Defined in
-
-[glicko2.ts:243](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L243)
-
-___
-
-### volatilityAlgorithms
-
-• **volatilityAlgorithms**: `any`
-
-Object of various algorithms that can be used by the ranking system
+The number of players in the record
 
 #### Defined in
 
-[glicko2.ts:250](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L250)
+[glicko2.ts:537](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L537)
 
 ## Methods
 
@@ -184,7 +162,7 @@ Object of various algorithms that can be used by the ranking system
 
 #### Defined in
 
-[glicko2.ts:645](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L645)
+[glicko2.ts:675](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L675)
 
 ___
 
@@ -209,7 +187,7 @@ players must have ids, they are not created if it has been done already.
 | `player2.rating` | `number` | - |
 | `player2.rd` | `number` | - |
 | `player2.vol` | `number` | - |
-| `outcome` | `number` | The outcome : 0 = defeat, 1 = victory, 0.5 = draw |
+| `outcome` | `number` | The outcome for the first player : 0 = defeat, 1 = victory, 0.5 = draw |
 
 #### Returns
 
@@ -222,7 +200,7 @@ players must have ids, they are not created if it has been done already.
 
 #### Defined in
 
-[glicko2.ts:616](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L616)
+[glicko2.ts:646](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L646)
 
 ___
 
@@ -238,7 +216,7 @@ Add a match result to be taken in account for the new rankings calculation
 | :------ | :------ | :------ |
 | `player1` | [`Player`](Player.md) | The first player |
 | `player2` | [`Player`](Player.md) | The second player |
-| `outcome` | `number` | The outcome : 0 = defeat, 1 = victory, 0.5 = draw |
+| `outcome` | `number` | The outcome of the first player : 0 = defeat, 1 = victory, 0.5 = draw |
 
 #### Returns
 
@@ -246,7 +224,7 @@ Add a match result to be taken in account for the new rankings calculation
 
 #### Defined in
 
-[glicko2.ts:698](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L698)
+[glicko2.ts:728](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L728)
 
 ___
 
@@ -254,13 +232,15 @@ ___
 
 ▸ **calculatePlayersRatings**(): `void`
 
+Updates the ratings for all the players
+
 #### Returns
 
 `void`
 
 #### Defined in
 
-[glicko2.ts:602](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L602)
+[glicko2.ts:632](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L632)
 
 ___
 
@@ -268,13 +248,15 @@ ___
 
 ▸ **cleanPreviousMatches**(): `void`
 
+Removes all of the previous matches from each of the players objects
+
 #### Returns
 
 `void`
 
 #### Defined in
 
-[glicko2.ts:594](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L594)
+[glicko2.ts:621](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L621)
 
 ___
 
@@ -290,7 +272,7 @@ A object with the player index id as the key and the Player object as the member
 
 #### Defined in
 
-[glicko2.ts:590](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L590)
+[glicko2.ts:614](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L614)
 
 ___
 
@@ -316,7 +298,7 @@ A Player object of the new player
 
 #### Defined in
 
-[glicko2.ts:641](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L641)
+[glicko2.ts:671](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L671)
 
 ___
 
@@ -336,7 +318,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:575](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L575)
+[glicko2.ts:599](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L599)
 
 ___
 
@@ -352,7 +334,7 @@ Removes all the players from the cache
 
 #### Defined in
 
-[glicko2.ts:582](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L582)
+[glicko2.ts:606](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L606)
 
 ___
 
@@ -372,4 +354,4 @@ ___
 
 #### Defined in
 
-[glicko2.ts:703](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L703)
+[glicko2.ts:733](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L733)

@@ -6,7 +6,7 @@ An Implementation of the Glicko-2 rating system in typescript. The Glicko-2 rati
 
 Each player begins with a rating, a rating deviation (accuracy of the rating) and a volatility (speed of rating evolution). These values will evolve according to the outcomes of matches with other players.
 
-This implementation is (almost) fully typed and written in typescript.
+This implementation is fully typed.
 
 ## Installing
 

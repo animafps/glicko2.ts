@@ -1,23 +1,32 @@
 const scalingFactor = 173.7178;
 
 /**
- * Internal glicko2 parameter. "Reasonable choices are between 0.3 and 1.2, though the system should be tested to decide which value results in greatest predictive accuracy."
- */
-export type Tau = number;
-
-/**
  * The class for a Race which is a match that includes more than 2 competitors
  */
 export class Race {
+    /**
+     * Array of the matches and outcomes based on the race results
+     */
     public matches: [Player, Player, number][] = [];
+    /**
+     * @param results An ordered array of the race results with the winner in index 0
+     */
     constructor(results: [Player][]) {
         this.matches = this.computeMatches(results);
     }
 
+    /**
+     * @returns An array of the matches within the race
+     */
     public getMatches(): [Player, Player, number][] {
         return this.matches;
     }
 
+    /**
+     * Turns an array of race results to an array of matches and outcomes
+     * @param results An ordered array of the race results with the winner in index 0
+     * @returns An array of matches and outcomes based on the race results
+     */
     public computeMatches(results: [Player][]): [Player, Player, number][] {
         const players: { player: Player; position: number }[] = [];
         let position = 0;
@@ -31,7 +40,7 @@ export class Race {
 
         function computeMatchesFunction(
             players: { player: Player; position: number }[]
-        ): any[] {
+        ): (number | Player)[][] {
             const player1 = players.shift() ?? {
                 player: new Player(321, 321, 321, 321),
                 position: 1,
@@ -48,7 +57,7 @@ export class Race {
             return player1Results.concat(computeMatchesFunction(players));
         }
 
-        return computeMatchesFunction(players);
+        return computeMatchesFunction(players) as [Player, Player, number][];
     }
 }
 
@@ -56,199 +65,41 @@ export class Race {
  * The class for a player object
  */
 export class Player {
-    private _tau: Tau;
+    private _tau: number;
     private __rating: number;
     private __rd: number;
     private __vol: number;
+    /**
+     * An array of the ratings of the opponents faced
+     */
     public adv_ranks: number[] = [];
+    /**
+     * An array of the rating deviations of the opponents faced
+     */
     public adv_rds: number[] = [];
+    /**
+     * An array of the outcomes the player has been in
+     */
     public outcomes: number[] = [];
-    private defaultRating = 1500;
+    /**
+     * The default rating of the player
+     * @default 1500
+     */
+    public defaultRating = 1500;
+    /**
+     * The id of the player
+     * @default 0
+     */
     public id = 0;
+    /**
+     * The volatility algorithm used by the player
+     */
     public volatilityAlgorithm: (v: number, delta: number) => number;
-    constructor(rating: number, rd: number, vol: number, tau: Tau) {
-        this._tau = tau;
-        this.__rating = (rating - this.defaultRating) / scalingFactor;
-        this.__rd = rd / scalingFactor;
-        this.__vol = vol;
-        this.volatilityAlgorithm = (v: number, delta: number) => v + delta;
-    }
-
-    public getRating(): number {
-        return this.__rating * scalingFactor + this.defaultRating;
-    }
-
-    public setRating(rating: number): void {
-        this.__rating = (rating - this.defaultRating) / scalingFactor;
-    }
-
-    public getRd(): number {
-        return this.__rd * scalingFactor;
-    }
-
-    public setRd(rd: number): void {
-        this.__rd = rd / scalingFactor;
-    }
-
-    public getVol(): number {
-        return this.__vol;
-    }
-
-    public setVol(vol: number): void {
-        this.__vol = vol;
-    }
-
-    public getRatings(): {
-        rating: number;
-        rd: number;
-        vol: number;
-        outcomes: number[];
-    } {
-        return {
-            rating: this.getRating(),
-            rd: this.getRd(),
-            vol: this.__vol,
-            outcomes: this.outcomes,
-        };
-    }
-
-    public addResult(opponent: Player, outcome: number): void {
-        this.adv_ranks.push(opponent.__rating);
-        this.adv_rds.push(opponent.__rd);
-        this.outcomes.push(outcome);
-    }
-
-    /**
-     * Calculates the new rating and rating deviation of the player.
-     * Follows the steps of the algorithm described at http://www.glicko.net/glicko/glicko2.pdf
-     */
-    public update_rank(): void {
-        if (!this.hasPlayed()) {
-            // Applies only the Step 6 of the algorithm
-            this._preRatingRD();
-            return;
-        }
-
-        //Step 1 : done by Player initialization
-        //Step 2 : done by setRating and setRd
-
-        //Step 3
-        const v = this._letiance();
-
-        //Step 4
-        const delta = this._delta(v);
-
-        //Step 5
-        this.__vol = this.volatilityAlgorithm(v, delta);
-
-        //Step 6
-        this._preRatingRD();
-
-        //Step 7
-        this.__rd = 1 / Math.sqrt(1 / Math.pow(this.__rd, 2) + 1 / v);
-
-        let tempSum = 0;
-        for (let i = 0, len = this.adv_ranks.length; i < len; i++) {
-            tempSum +=
-                this._g(this.adv_rds[i]) *
-                (this.outcomes[i] -
-                    this._E(this.adv_ranks[i], this.adv_rds[i]));
-        }
-        this.__rating += Math.pow(this.__rd, 2) * tempSum;
-
-        //Step 8 : done by getRating and getRd
-    }
-
-    public hasPlayed(): boolean {
-        return this.outcomes.length > 0;
-    }
-
-    /**
-     * Calculates and updates the player's rating deviation for the beginning of a rating period.
-     * preRatingRD() -> None
-     */
-    private _preRatingRD() {
-        this.__rd = Math.sqrt(Math.pow(this.__rd, 2) + Math.pow(this.__vol, 2));
-    }
-
-    /**
-     * Calculation of the estimated letiance of the player's rating based on game outcomes
-     */
-    private _letiance() {
-        let tempSum = 0;
-        for (let i = 0, len = this.adv_ranks.length; i < len; i++) {
-            const tempE = this._E(this.adv_ranks[i], this.adv_rds[i]);
-            tempSum +=
-                Math.pow(this._g(this.adv_rds[i]), 2) * tempE * (1 - tempE);
-        }
-        return 1 / tempSum;
-    }
-
-    /**
-     * The Glicko E function.
-     */
-    private _E(p2rating: number, p2RD: number) {
-        return (
-            1 / (1 + Math.exp(-1 * this._g(p2RD) * (this.__rating - p2rating)))
-        );
-    }
-
-    /**
-     *  The Glicko2 g(RD) function.
-     */
-    private _g(RD: number) {
-        return 1 / Math.sqrt(1 + (3 * Math.pow(RD, 2)) / Math.pow(Math.PI, 2));
-    }
-
-    /**
-     * The delta function of the Glicko2 system.
-     * Calculation of the estimated improvement in rating (step 4 of the algorithm)
-     */
-    private _delta(v: number) {
-        let tempSum = 0;
-        for (let i = 0, len = this.adv_ranks.length; i < len; i++) {
-            tempSum +=
-                this._g(this.adv_rds[i]) *
-                (this.outcomes[i] -
-                    this._E(this.adv_ranks[i], this.adv_rds[i]));
-        }
-        return v * tempSum;
-    }
-
-    public _makef(delta: number, v: number, a: number) {
-        return (x: number): number => {
-            return (
-                (Math.exp(x) *
-                    (Math.pow(delta, 2) -
-                        Math.pow(this.__rd, 2) -
-                        v -
-                        Math.exp(x))) /
-                    (2 *
-                        Math.pow(Math.pow(this.__rd, 2) + v + Math.exp(x), 2)) -
-                (x - a) / Math.pow(this._tau, 2)
-            );
-        };
-    }
-}
-
-/**
- * The main class of the rating system
- */
-export class Glicko2 {
-    private _tau: Tau;
-    private _default_rating;
-    private _default_rd;
-    private _default_vol;
-    public players: Record<string, Player> = {};
-    public players_index = 0;
-    private _volatilityAlgorithm: (v: number, delta: number) => number;
-    public player_index = 0;
     /**
      * Object of various algorithms that can be used by the ranking system
-     *
      */
-    public volatilityAlgorithms: any = {
-        oldProcedure: function (v: number, delta: number): number {
+    public readonly volatilityAlgorithms = {
+        oldProcedure: (v: number, delta: number): number => {
             const sigma = this.__vol;
             const phi = this.__rd;
             const tau = this._tau;
@@ -293,37 +144,6 @@ export class Glicko2 {
             }
             return result;
 
-            function newSigma(
-                sigma: number,
-                phi: number,
-                v: number,
-                delta: number,
-                tau: number
-            ): number {
-                const a = Math.log(Math.pow(sigma, 2));
-                let x = a;
-                let oldX = 0;
-                while (x != oldX) {
-                    oldX = x;
-                    const d = Math.pow(phi, 2) + v + Math.exp(oldX);
-                    const h1 =
-                        -(oldX - a) / Math.pow(tau, 2) -
-                        (0.5 * Math.exp(oldX)) / d +
-                        0.5 * Math.exp(oldX) * Math.pow(delta / d, 2);
-                    const h2 =
-                        -1 / Math.pow(tau, 2) -
-                        (0.5 * Math.exp(oldX) * (Math.pow(phi, 2) + v)) /
-                            Math.pow(d, 2) +
-                        (0.5 *
-                            Math.pow(delta, 2) *
-                            Math.exp(oldX) *
-                            (Math.pow(phi, 2) + v - Math.exp(oldX))) /
-                            Math.pow(d, 3);
-                    x = oldX - h1 / h2;
-                }
-                return Math.exp(x / 2);
-            }
-
             function equation(
                 phi: number,
                 v: number,
@@ -338,40 +158,6 @@ export class Glicko2 {
                     (0.5 * Math.exp(x)) / d +
                     0.5 * Math.exp(x) * Math.pow(delta / d, 2)
                 );
-            }
-
-            function newSigmaBisection(
-                sigma: number,
-                phi: number,
-                v: number,
-                delta: number,
-                tau: number
-            ) {
-                let x1, x2, x3;
-                const a = Math.log(Math.pow(sigma, 2));
-                if (equation(phi, v, 0, a, tau, delta) < 0) {
-                    x1 = -1;
-                    while (equation(phi, v, x1, a, tau, delta) < 0) {
-                        x1 = x1 - 1;
-                    }
-                    x2 = x1 + 1;
-                } else {
-                    x2 = 1;
-                    while (equation(phi, v, x2, a, tau, delta) > 0) {
-                        x2 = x2 + 1;
-                    }
-                    x1 = x2 - 1;
-                }
-
-                for (let i = 0; i < 27; i++) {
-                    x3 = (x1 + x2) / 2;
-                    if (equation(phi, v, x3, a, tau, delta) > 0) {
-                        x1 = x3;
-                    } else {
-                        x2 = x3;
-                    }
-                }
-                return Math.exp((x1 + x2) / 4);
             }
 
             function dequation(
@@ -429,7 +215,7 @@ export class Glicko2 {
                 }
             }
         },
-        newProcedure: function (v: number, delta: number): number {
+        newProcedure: (v: number, delta: number): number => {
             //Step 5.1
             let A = Math.log(Math.pow(this.__vol, 2));
             const f = this._makef(delta, v, A);
@@ -468,7 +254,7 @@ export class Glicko2 {
             //Step 5.5
             return Math.exp(A / 2);
         },
-        newProcedure_mod: function (v: number, delta: number) {
+        newProcedure_mod: (v: number, delta: number): number => {
             //Step 5.1
             let A = Math.log(Math.pow(this.__vol, 2));
             const f = this._makef(delta, v, A);
@@ -509,7 +295,7 @@ export class Glicko2 {
             //Step 5.5
             return Math.exp(A / 2);
         },
-        oldProcedure_simple: function (v: number, delta: number) {
+        oldProcedure_simple: (v: number, delta: number): number => {
             const a = Math.log(Math.pow(this.__vol, 2));
             const tau = this._tau;
             let x0 = a;
@@ -539,37 +325,275 @@ export class Glicko2 {
             return Math.exp(x1 / 2);
         },
     };
+    constructor(rating: number, rd: number, vol: number, tau: number) {
+        this._tau = tau;
+        this.__rating = (rating - this.defaultRating) / scalingFactor;
+        this.__rd = rd / scalingFactor;
+        this.__vol = vol;
+        this.volatilityAlgorithm = (v: number, delta: number) => v + delta;
+    }
+
     /**
-     *
-     * @param settings
+     * @returns The rating of the player in the Glicko format
      */
+    public getRating(): number {
+        return this.__rating * scalingFactor + this.defaultRating;
+    }
+
+    /**
+     * Sets the rating of the player
+     * @param rating The rating in Glicko format
+     */
+    public setRating(rating: number): void {
+        this.__rating = (rating - this.defaultRating) / scalingFactor;
+    }
+
+    /**
+     * @returns The rating deviation of the player
+     */
+    public getRd(): number {
+        return this.__rd * scalingFactor;
+    }
+
+    /**
+     * Sets the rating deviation of the player
+     */
+    public setRd(rd: number): void {
+        this.__rd = rd / scalingFactor;
+    }
+
+    /**
+     * @returns The volatility value of the player
+     */
+    public getVol(): number {
+        return this.__vol;
+    }
+
+    /**
+     * Sets the volatility value of the player
+     */
+    public setVol(vol: number): void {
+        this.__vol = vol;
+    }
+
+    /**
+     * @returns An object of the players rating, rating deviation, volatility and the recent outcomes
+     */
+    public getRatings(): {
+        rating: number;
+        rd: number;
+        vol: number;
+        outcomes: number[];
+    } {
+        return {
+            rating: this.getRating(),
+            rd: this.getRd(),
+            vol: this.__vol,
+            outcomes: this.outcomes,
+        };
+    }
+
+    /**
+     * Adds a result to the players object
+     * @param outcome
+     */
+    public addResult(opponent: Player, outcome: number): void {
+        this.adv_ranks.push(opponent.__rating);
+        this.adv_rds.push(opponent.__rd);
+        this.outcomes.push(outcome);
+    }
+
+    /**
+     * Calculates the new rating and rating deviation of the player.
+     * Follows the steps of the algorithm described at http://www.glicko.net/glicko/glicko2.pdf
+     */
+    public update_rank(): void {
+        if (!this.hasPlayed()) {
+            // Applies only the Step 6 of the algorithm
+            this._preRatingRD();
+            return;
+        }
+
+        //Step 1 : done by Player initialization
+        //Step 2 : done by setRating and setRd
+
+        //Step 3
+        const v = this._letiance();
+
+        //Step 4
+        const delta = this._delta(v);
+
+        //Step 5
+        this.__vol = this.volatilityAlgorithm(v, delta);
+
+        //Step 6
+        this._preRatingRD();
+
+        //Step 7
+        this.__rd = 1 / Math.sqrt(1 / Math.pow(this.__rd, 2) + 1 / v);
+
+        let tempSum = 0;
+        for (let i = 0, len = this.adv_ranks.length; i < len; i++) {
+            tempSum +=
+                this._g(this.adv_rds[i]) *
+                (this.outcomes[i] -
+                    this._E(this.adv_ranks[i], this.adv_rds[i]));
+        }
+        this.__rating += Math.pow(this.__rd, 2) * tempSum;
+
+        //Step 8 : done by getRating and getRd
+    }
+
+    /**
+     * @returns A boolean value of if the player has played a game
+     */
+    public hasPlayed(): boolean {
+        return this.outcomes.length > 0;
+    }
+
+    /**
+     * Calculates and updates the player's rating deviation for the beginning of a rating period.
+     * preRatingRD() -> None
+     */
+    private _preRatingRD() {
+        this.__rd = Math.sqrt(Math.pow(this.__rd, 2) + Math.pow(this.__vol, 2));
+    }
+
+    /**
+     * Calculation of the estimated letiance of the player's rating based on game outcomes
+     */
+    private _letiance() {
+        let tempSum = 0;
+        for (let i = 0, len = this.adv_ranks.length; i < len; i++) {
+            const tempE = this._E(this.adv_ranks[i], this.adv_rds[i]);
+            tempSum +=
+                Math.pow(this._g(this.adv_rds[i]), 2) * tempE * (1 - tempE);
+        }
+        return 1 / tempSum;
+    }
+
+    /**
+     * The Glicko E function.
+     */
+    private _E(p2rating: number, p2RD: number) {
+        return (
+            1 / (1 + Math.exp(-1 * this._g(p2RD) * (this.__rating - p2rating)))
+        );
+    }
+
+    /**
+     * The Glicko2 g(RD) function.
+     */
+    private _g(RD: number) {
+        return 1 / Math.sqrt(1 + (3 * Math.pow(RD, 2)) / Math.pow(Math.PI, 2));
+    }
+
+    /**
+     * The delta function of the Glicko2 system.
+     * Calculation of the estimated improvement in rating (step 4 of the algorithm)
+     */
+    private _delta(v: number) {
+        let tempSum = 0;
+        for (let i = 0, len = this.adv_ranks.length; i < len; i++) {
+            tempSum +=
+                this._g(this.adv_rds[i]) *
+                (this.outcomes[i] -
+                    this._E(this.adv_ranks[i], this.adv_rds[i]));
+        }
+        return v * tempSum;
+    }
+
+    /**
+     * Makes the f functions for value a and b
+     */
+    private _makef(delta: number, v: number, a: number) {
+        return (x: number): number => {
+            return (
+                (Math.exp(x) *
+                    (Math.pow(delta, 2) -
+                        Math.pow(this.__rd, 2) -
+                        v -
+                        Math.exp(x))) /
+                    (2 *
+                        Math.pow(Math.pow(this.__rd, 2) + v + Math.exp(x), 2)) -
+                (x - a) / Math.pow(this._tau, 2)
+            );
+        };
+    }
+}
+
+/**
+ * The main class of the rating system
+ */
+export class Glicko2 {
+    private _tau: number;
+    private _default_rating;
+    private _default_rd;
+    private _default_vol;
+    public players: Record<string, Player> = {};
+    /**
+     * The number of players in the record
+     */
+    public players_index = 0;
+    private _volatilityAlgorithm: (v: number, delta: number) => number;
     constructor(
         settings: {
             /**
-             * Internal glicko2 parameter.
+             * The system constant, tau, which constrains the change in volatility over time,
+             * needs to be set prior to application of the system. Reasonable choices are
+             * between 0.3 and 1.2, though the system should be tested to decide which value
+             * results in greatest predictive accuracy. Smaller values of tau prevent the volatility
+             * measures from changing by large amounts, which in turn prevent enormous changes
+             * in ratings based on very improbable results. If the application of Glicko-2 is
+             * expected to involve extremely improbable collections of game outcomes, then tau
+             * should be set to a small value, even as small as, say, tau = 0.2
+             * @default 0.5
              */
-            tau?: Tau;
+            tau: number;
             /**
-             * default rating
+             * Base rating
+             * @default 1500
              */
-            rating?: number;
-            vol?: number;
-            rd?: number;
-            volatilityAlgorithm?: string;
-        } = {}
+            rating: number;
+            /**
+             * Base volatility
+             * The volatility measure indicates the degree of expected fluctuation in a player’s rating
+             * @default 0.06
+             */
+            vol: number;
+            /**
+             * Base rating deviation
+             * @default 350
+             */
+            rd: number;
+            /**
+             * The algorithm to calculate the volatility
+             * @default "newProcedure"
+             */
+            volatilityAlgorithm:
+                | "newProcedure"
+                | "oldProcedure"
+                | "newProcedure_mod"
+                | "oldProcedure_simple";
+        } = {
+            tau: 0.5,
+            rating: 1500,
+            rd: 350,
+            vol: 0.06,
+            volatilityAlgorithm: "newProcedure",
+        }
     ) {
-        this._tau = settings.tau || 0.5;
+        this._tau = settings.tau;
 
-        this._default_rating = settings.rating || 1500;
+        this._default_rating = settings.rating;
 
-        this._default_rd = settings.rd || 350;
+        this._default_rd = settings.rd;
 
-        this._default_vol = settings.vol || 0.06;
+        this._default_vol = settings.vol;
 
-        this._volatilityAlgorithm =
-            this.volatilityAlgorithms[
-                settings.volatilityAlgorithm || "newProcedure"
-            ];
+        this._volatilityAlgorithm = new Player(1, 1, 1, 1).volatilityAlgorithms[
+            settings.volatilityAlgorithm
+        ];
     }
 
     public makeRace(results: [Player][]): Race {
@@ -581,7 +605,7 @@ export class Glicko2 {
      */
     public removePlayers(): void {
         this.players = {};
-        this.player_index = 0;
+        this.players_index = 0;
     }
 
     /**
@@ -591,6 +615,9 @@ export class Glicko2 {
         return this.players;
     }
 
+    /**
+     * Removes all of the previous matches from each of the players objects
+     */
     public cleanPreviousMatches(): void {
         for (let i = 0; i < Object.keys(this.players).length; i++) {
             this.players[i].adv_ranks = [];
@@ -599,6 +626,9 @@ export class Glicko2 {
         }
     }
 
+    /**
+     * Updates the ratings for all the players
+     */
     public calculatePlayersRatings(): void {
         const keys = Object.keys(this.players);
         for (let i = 0; i < keys.length; i++) {
@@ -611,7 +641,7 @@ export class Glicko2 {
      * players must have ids, they are not created if it has been done already.
      * @param player1 The first player
      * @param player2 The second player
-     * @param outcome The outcome : 0 = defeat, 1 = victory, 0.5 = draw
+     * @param outcome The outcome for the first player : 0 = defeat, 1 = victory, 0.5 = draw
      */
     public addMatch(
         player1: { rating: number; rd: number; vol: number; id: number },
@@ -693,7 +723,7 @@ export class Glicko2 {
      * Add a match result to be taken in account for the new rankings calculation
      * @param player1 The first player
      * @param player2 The second player
-     * @param outcome The outcome : 0 = defeat, 1 = victory, 0.5 = draw
+     * @param outcome The outcome of the first player : 0 = defeat, 1 = victory, 0.5 = draw
      */
     public addResult(player1: Player, player2: Player, outcome: number): void {
         player1.addResult(player2, outcome);

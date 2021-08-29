@@ -27,13 +27,13 @@ The class for a Race which is a match that includes more than 2 competitors
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `results` | [[`Player`](Player.md)][] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `results` | [[`Player`](Player.md)][] | An ordered array of the race results with the winner in index 0 |
 
 #### Defined in
 
-[glicko2.ts:13](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L13)
+[glicko2.ts:14](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L14)
 
 ## Properties
 
@@ -41,9 +41,11 @@ The class for a Race which is a match that includes more than 2 competitors
 
 • **matches**: [[`Player`](Player.md), [`Player`](Player.md), `number`][] = `[]`
 
+Array of the matches and outcomes based on the race results
+
 #### Defined in
 
-[glicko2.ts:12](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L12)
+[glicko2.ts:10](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L10)
 
 ## Methods
 
@@ -51,19 +53,23 @@ The class for a Race which is a match that includes more than 2 competitors
 
 ▸ **computeMatches**(`results`): [[`Player`](Player.md), [`Player`](Player.md), `number`][]
 
+Turns an array of race results to an array of matches and outcomes
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `results` | [[`Player`](Player.md)][] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `results` | [[`Player`](Player.md)][] | An ordered array of the race results with the winner in index 0 |
 
 #### Returns
 
 [[`Player`](Player.md), [`Player`](Player.md), `number`][]
 
+An array of matches and outcomes based on the race results
+
 #### Defined in
 
-[glicko2.ts:21](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L21)
+[glicko2.ts:30](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L30)
 
 ___
 
@@ -75,6 +81,8 @@ ___
 
 [[`Player`](Player.md), [`Player`](Player.md), `number`][]
 
+An array of the matches within the race
+
 #### Defined in
 
-[glicko2.ts:17](https://github.com/animafps/glicko2.ts/blob/b8b47fa/glicko2.ts#L17)
+[glicko2.ts:21](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L21)
