@@ -1,4 +1,4 @@
-[glicko2.ts](../README.md) / [Exports](../modules.md) / Glicko2
+[glicko2.ts](../README.md) / Glicko2
 
 # Class: Glicko2
 
@@ -16,10 +16,11 @@ The main class of the rating system
 - [\_default\_rd](Glicko2.md#_default_rd)
 - [\_default\_vol](Glicko2.md#_default_vol)
 - [\_tau](Glicko2.md#_tau)
-- [\_volatility\_algorithm](Glicko2.md#_volatility_algorithm)
+- [\_volatilityAlgorithm](Glicko2.md#_volatilityalgorithm)
 - [player\_index](Glicko2.md#player_index)
 - [players](Glicko2.md#players)
 - [players\_index](Glicko2.md#players_index)
+- [volatilityAlgorithms](Glicko2.md#volatilityalgorithms)
 
 ### Methods
 
@@ -49,11 +50,11 @@ The main class of the rating system
 | `settings.rd?` | `number` | - |
 | `settings.tau?` | `number` | Internal glicko2 parameter. |
 | `settings.vol?` | `number` | - |
-| `settings.volatility_algorithm?` | `string` | - |
+| `settings.volatilityAlgorithm?` | `string` | - |
 
 #### Defined in
 
-[glicko2.ts:244](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L244)
+[glicko2.ts:546](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L546)
 
 ## Properties
 
@@ -63,7 +64,7 @@ The main class of the rating system
 
 #### Defined in
 
-[glicko2.ts:233](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L233)
+[glicko2.ts:239](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L239)
 
 ___
 
@@ -73,7 +74,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:234](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L234)
+[glicko2.ts:240](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L240)
 
 ___
 
@@ -83,7 +84,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:235](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L235)
+[glicko2.ts:241](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L241)
 
 ___
 
@@ -93,17 +94,24 @@ ___
 
 #### Defined in
 
-[glicko2.ts:232](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L232)
+[glicko2.ts:238](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L238)
 
 ___
 
-### \_volatility\_algorithm
+### \_volatilityAlgorithm
 
-• `Private` **\_volatility\_algorithm**: () => `number`
+• `Private` **\_volatilityAlgorithm**: (`v`: `number`, `delta`: `number`) => `number`
 
 #### Type declaration
 
-▸ (): `number`
+▸ (`v`, `delta`): `number`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `v` | `number` |
+| `delta` | `number` |
 
 ##### Returns
 
@@ -111,7 +119,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:238](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L238)
+[glicko2.ts:244](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L244)
 
 ___
 
@@ -121,7 +129,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:239](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L239)
+[glicko2.ts:245](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L245)
 
 ___
 
@@ -131,7 +139,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:236](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L236)
+[glicko2.ts:242](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L242)
 
 ___
 
@@ -141,7 +149,19 @@ ___
 
 #### Defined in
 
-[glicko2.ts:237](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L237)
+[glicko2.ts:243](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L243)
+
+___
+
+### volatilityAlgorithms
+
+• **volatilityAlgorithms**: `any`
+
+Object of various algorithms that can be used by the ranking system
+
+#### Defined in
+
+[glicko2.ts:250](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L250)
 
 ## Methods
 
@@ -164,7 +184,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:343](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L343)
+[glicko2.ts:645](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L645)
 
 ___
 
@@ -202,7 +222,7 @@ players must have ids, they are not created if it has been done already.
 
 #### Defined in
 
-[glicko2.ts:314](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L314)
+[glicko2.ts:616](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L616)
 
 ___
 
@@ -226,7 +246,7 @@ Add a match result to be taken in account for the new rankings calculation
 
 #### Defined in
 
-[glicko2.ts:396](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L396)
+[glicko2.ts:698](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L698)
 
 ___
 
@@ -240,7 +260,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:300](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L300)
+[glicko2.ts:602](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L602)
 
 ___
 
@@ -254,7 +274,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:292](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L292)
+[glicko2.ts:594](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L594)
 
 ___
 
@@ -270,7 +290,7 @@ A object with the player index id as the key and the Player object as the member
 
 #### Defined in
 
-[glicko2.ts:288](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L288)
+[glicko2.ts:590](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L590)
 
 ___
 
@@ -296,7 +316,7 @@ A Player object of the new player
 
 #### Defined in
 
-[glicko2.ts:339](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L339)
+[glicko2.ts:641](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L641)
 
 ___
 
@@ -316,7 +336,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:273](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L273)
+[glicko2.ts:575](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L575)
 
 ___
 
@@ -332,7 +352,7 @@ Removes all the players from the cache
 
 #### Defined in
 
-[glicko2.ts:280](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L280)
+[glicko2.ts:582](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L582)
 
 ___
 
@@ -352,4 +372,4 @@ ___
 
 #### Defined in
 
-[glicko2.ts:401](https://github.com/animafps/glicko2.ts/blob/0f620c2/glicko2.ts#L401)
+[glicko2.ts:703](https://github.com/animafps/glicko2.ts/blob/61d7de1/glicko2.ts#L703)

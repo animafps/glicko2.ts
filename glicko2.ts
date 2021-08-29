@@ -24,7 +24,7 @@ export class Race {
 
         results.forEach((rank) => {
             position += 1;
-            rank.forEach((player: any) => {
+            rank.forEach((player: Player) => {
                 players.push({ player: player, position: position });
             });
         });
@@ -36,8 +36,8 @@ export class Race {
                 player: new Player(321, 321, 321, 321),
                 position: 1,
             };
-            const player1_results = players.map(
-                (player2: { player: any; position: number }) => {
+            const player1Results = players.map(
+                (player2: { player: Player; position: number }) => {
                     return [
                         player1.player,
                         player2.player,
@@ -45,7 +45,7 @@ export class Race {
                     ];
                 }
             );
-            return player1_results.concat(computeMatchesFunction(players));
+            return player1Results.concat(computeMatchesFunction(players));
         }
 
         return computeMatchesFunction(players);
@@ -65,39 +65,45 @@ export class Player {
     public outcomes: number[] = [];
     private defaultRating = 1500;
     public id = 0;
-    public volatility_algorithm: any;
+    public volatilityAlgorithm: (v: number, delta: number) => number;
     constructor(rating: number, rd: number, vol: number, tau: Tau) {
         this._tau = tau;
         this.__rating = (rating - this.defaultRating) / scalingFactor;
         this.__rd = rd / scalingFactor;
         this.__vol = vol;
+        this.volatilityAlgorithm = (v: number, delta: number) => v + delta;
     }
 
     public getRating(): number {
         return this.__rating * scalingFactor + this.defaultRating;
     }
 
-    public setRating(rating: number) {
+    public setRating(rating: number): void {
         this.__rating = (rating - this.defaultRating) / scalingFactor;
     }
 
-    public getRd() {
+    public getRd(): number {
         return this.__rd * scalingFactor;
     }
 
-    public setRd(rd: number) {
+    public setRd(rd: number): void {
         this.__rd = rd / scalingFactor;
     }
 
-    public getVol() {
+    public getVol(): number {
         return this.__vol;
     }
 
-    public setVol(vol: number) {
+    public setVol(vol: number): void {
         this.__vol = vol;
     }
 
-    public getRatings() {
+    public getRatings(): {
+        rating: number;
+        rd: number;
+        vol: number;
+        outcomes: number[];
+    } {
         return {
             rating: this.getRating(),
             rd: this.getRd(),
@@ -106,7 +112,7 @@ export class Player {
         };
     }
 
-    public addResult(opponent: Player, outcome: number) {
+    public addResult(opponent: Player, outcome: number): void {
         this.adv_ranks.push(opponent.__rating);
         this.adv_rds.push(opponent.__rd);
         this.outcomes.push(outcome);
@@ -116,7 +122,7 @@ export class Player {
      * Calculates the new rating and rating deviation of the player.
      * Follows the steps of the algorithm described at http://www.glicko.net/glicko/glicko2.pdf
      */
-    public update_rank() {
+    public update_rank(): void {
         if (!this.hasPlayed()) {
             // Applies only the Step 6 of the algorithm
             this._preRatingRD();
@@ -133,7 +139,7 @@ export class Player {
         const delta = this._delta(v);
 
         //Step 5
-        this.__vol = this.volatility_algorithm(v, delta);
+        this.__vol = this.volatilityAlgorithm(v, delta);
 
         //Step 6
         this._preRatingRD();
@@ -153,7 +159,7 @@ export class Player {
         //Step 8 : done by getRating and getRd
     }
 
-    public hasPlayed() {
+    public hasPlayed(): boolean {
         return this.outcomes.length > 0;
     }
 
@@ -210,7 +216,7 @@ export class Player {
     }
 
     public _makef(delta: number, v: number, a: number) {
-        return (x: number) => {
+        return (x: number): number => {
             return (
                 (Math.exp(x) *
                     (Math.pow(delta, 2) -
@@ -235,8 +241,304 @@ export class Glicko2 {
     private _default_vol;
     public players: Record<string, Player> = {};
     public players_index = 0;
-    private _volatility_algorithm: () => number;
+    private _volatilityAlgorithm: (v: number, delta: number) => number;
     public player_index = 0;
+    /**
+     * Object of various algorithms that can be used by the ranking system
+     *
+     */
+    public volatilityAlgorithms: any = {
+        oldProcedure: function (v: number, delta: number): number {
+            const sigma = this.__vol;
+            const phi = this.__rd;
+            const tau = this._tau;
+
+            let x1, x2, x3, y2, y3;
+            let result;
+
+            const upper = findUpperFalsep(phi, v, delta, tau);
+
+            const a = Math.log(Math.pow(sigma, 2));
+            let y1 = equation(phi, v, 0, a, tau, delta);
+            if (y1 > 0) {
+                result = upper;
+            } else {
+                x1 = 0;
+                x2 = x1;
+                y2 = y1;
+                x1 = x1 - 1;
+                y1 = equation(phi, v, x1, a, tau, delta);
+                while (y1 < 0) {
+                    x2 = x1;
+                    y2 = y1;
+                    x1 = x1 - 1;
+                    y1 = equation(phi, v, x1, a, tau, delta);
+                }
+                for (let i = 0; i < 21; i++) {
+                    x3 = (y1 * (x1 - x2)) / (y2 - y1) + x1;
+                    y3 = equation(phi, v, x3, a, tau, delta);
+                    if (y3 > 0) {
+                        x1 = x3;
+                        y1 = y3;
+                    } else {
+                        x2 = x3;
+                        y2 = y3;
+                    }
+                }
+                if (Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2) > upper) {
+                    result = upper;
+                } else {
+                    result = Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2);
+                }
+            }
+            return result;
+
+            function newSigma(
+                sigma: number,
+                phi: number,
+                v: number,
+                delta: number,
+                tau: number
+            ): number {
+                const a = Math.log(Math.pow(sigma, 2));
+                let x = a;
+                let oldX = 0;
+                while (x != oldX) {
+                    oldX = x;
+                    const d = Math.pow(phi, 2) + v + Math.exp(oldX);
+                    const h1 =
+                        -(oldX - a) / Math.pow(tau, 2) -
+                        (0.5 * Math.exp(oldX)) / d +
+                        0.5 * Math.exp(oldX) * Math.pow(delta / d, 2);
+                    const h2 =
+                        -1 / Math.pow(tau, 2) -
+                        (0.5 * Math.exp(oldX) * (Math.pow(phi, 2) + v)) /
+                            Math.pow(d, 2) +
+                        (0.5 *
+                            Math.pow(delta, 2) *
+                            Math.exp(oldX) *
+                            (Math.pow(phi, 2) + v - Math.exp(oldX))) /
+                            Math.pow(d, 3);
+                    x = oldX - h1 / h2;
+                }
+                return Math.exp(x / 2);
+            }
+
+            function equation(
+                phi: number,
+                v: number,
+                x: number,
+                a: number,
+                tau: number,
+                delta: number
+            ) {
+                const d = Math.pow(phi, 2) + v + Math.exp(x);
+                return (
+                    -(x - a) / Math.pow(tau, 2) -
+                    (0.5 * Math.exp(x)) / d +
+                    0.5 * Math.exp(x) * Math.pow(delta / d, 2)
+                );
+            }
+
+            function newSigmaBisection(
+                sigma: number,
+                phi: number,
+                v: number,
+                delta: number,
+                tau: number
+            ) {
+                let x1, x2, x3;
+                const a = Math.log(Math.pow(sigma, 2));
+                if (equation(phi, v, 0, a, tau, delta) < 0) {
+                    x1 = -1;
+                    while (equation(phi, v, x1, a, tau, delta) < 0) {
+                        x1 = x1 - 1;
+                    }
+                    x2 = x1 + 1;
+                } else {
+                    x2 = 1;
+                    while (equation(phi, v, x2, a, tau, delta) > 0) {
+                        x2 = x2 + 1;
+                    }
+                    x1 = x2 - 1;
+                }
+
+                for (let i = 0; i < 27; i++) {
+                    x3 = (x1 + x2) / 2;
+                    if (equation(phi, v, x3, a, tau, delta) > 0) {
+                        x1 = x3;
+                    } else {
+                        x2 = x3;
+                    }
+                }
+                return Math.exp((x1 + x2) / 4);
+            }
+
+            function dequation(
+                phi: number,
+                v: number,
+                x: number,
+                tau: number,
+                delta: number
+            ) {
+                const d = Math.pow(phi, 2) + v + Math.exp(x);
+                return (
+                    -1 / Math.pow(tau, 2) -
+                    (0.5 * Math.exp(x)) / d +
+                    (0.5 * Math.exp(x) * (Math.exp(x) + Math.pow(delta, 2))) /
+                        Math.pow(d, 2) -
+                    (Math.pow(Math.exp(x), 2) * Math.pow(delta, 2)) /
+                        Math.pow(d, 3)
+                );
+            }
+
+            function findUpperFalsep(
+                phi: number,
+                v: number,
+                delta: number,
+                tau: number
+            ) {
+                let x1, x2, x3, y1, y2, y3;
+                y1 = dequation(phi, v, 0, tau, delta);
+                if (y1 < 0) {
+                    return 1;
+                } else {
+                    x1 = 0;
+                    x2 = x1;
+                    y2 = y1;
+                    x1 = x1 - 1;
+                    y1 = dequation(phi, v, x1, tau, delta);
+                    while (y1 > 0) {
+                        x2 = x1;
+                        y2 = y1;
+                        x1 = x1 - 1;
+                        y1 = dequation(phi, v, x1, tau, delta);
+                    }
+                    for (let i = 0; i < 21; i++) {
+                        x3 = (y1 * (x1 - x2)) / (y2 - y1) + x1;
+                        y3 = dequation(phi, v, x3, tau, delta);
+                        if (y3 > 0) {
+                            x1 = x3;
+                            y1 = y3;
+                        } else {
+                            x2 = x3;
+                            y2 = y3;
+                        }
+                    }
+                    return Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2);
+                }
+            }
+        },
+        newProcedure: function (v: number, delta: number): number {
+            //Step 5.1
+            let A = Math.log(Math.pow(this.__vol, 2));
+            const f = this._makef(delta, v, A);
+            const epsilon = 0.0000001;
+
+            //Step 5.2
+            let B, k;
+            if (Math.pow(delta, 2) > Math.pow(this.__rd, 2) + v) {
+                B = Math.log(Math.pow(delta, 2) - Math.pow(this.__rd, 2) - v);
+            } else {
+                k = 1;
+                while (f(A - k * this._tau) < 0) {
+                    k = k + 1;
+                }
+                B = A - k * this._tau;
+            }
+
+            //Step 5.3
+            let fA = f(A);
+            let fB = f(B);
+
+            //Step 5.4
+            let C, fC;
+            while (Math.abs(B - A) > epsilon) {
+                C = A + ((A - B) * fA) / (fB - fA);
+                fC = f(C);
+                if (fC * fB < 0) {
+                    A = B;
+                    fA = fB;
+                } else {
+                    fA = fA / 2;
+                }
+                B = C;
+                fB = fC;
+            }
+            //Step 5.5
+            return Math.exp(A / 2);
+        },
+        newProcedure_mod: function (v: number, delta: number) {
+            //Step 5.1
+            let A = Math.log(Math.pow(this.__vol, 2));
+            const f = this._makef(delta, v, A);
+            const epsilon = 0.0000001;
+
+            //Step 5.2
+            let B, k;
+            //XXX mod
+            if (delta > Math.pow(this.__rd, 2) + v) {
+                //XXX mod
+                B = Math.log(delta - Math.pow(this.__rd, 2) - v);
+            } else {
+                k = 1;
+                while (f(A - k * this._tau) < 0) {
+                    k = k + 1;
+                }
+                B = A - k * this._tau;
+            }
+
+            //Step 5.3
+            let fA = f(A);
+            let fB = f(B);
+
+            //Step 5.4
+            let C, fC;
+            while (Math.abs(B - A) > epsilon) {
+                C = A + ((A - B) * fA) / (fB - fA);
+                fC = f(C);
+                if (fC * fB < 0) {
+                    A = B;
+                    fA = fB;
+                } else {
+                    fA = fA / 2;
+                }
+                B = C;
+                fB = fC;
+            }
+            //Step 5.5
+            return Math.exp(A / 2);
+        },
+        oldProcedure_simple: function (v: number, delta: number) {
+            const a = Math.log(Math.pow(this.__vol, 2));
+            const tau = this._tau;
+            let x0 = a;
+            let x1 = 0;
+            let d, h1, h2;
+
+            while (Math.abs(x0 - x1) > 0.00000001) {
+                // New iteration, so x(i) becomes x(i-1)
+                x0 = x1;
+                d = Math.pow(this.__rating, 2) + v + Math.exp(x0);
+                h1 =
+                    -(x0 - a) / Math.pow(tau, 2) -
+                    (0.5 * Math.exp(x0)) / d +
+                    0.5 * Math.exp(x0) * Math.pow(delta / d, 2);
+                h2 =
+                    -1 / Math.pow(tau, 2) -
+                    (0.5 * Math.exp(x0) * (Math.pow(this.__rating, 2) + v)) /
+                        Math.pow(d, 2) +
+                    (0.5 *
+                        Math.pow(delta, 2) *
+                        Math.exp(x0) *
+                        (Math.pow(this.__rating, 2) + v - Math.exp(x0))) /
+                        Math.pow(d, 3);
+                x1 = x0 - h1 / h2;
+            }
+
+            return Math.exp(x1 / 2);
+        },
+    };
     /**
      *
      * @param settings
@@ -253,7 +555,7 @@ export class Glicko2 {
             rating?: number;
             vol?: number;
             rd?: number;
-            volatility_algorithm?: string;
+            volatilityAlgorithm?: string;
         } = {}
     ) {
         this._tau = settings.tau || 0.5;
@@ -264,20 +566,20 @@ export class Glicko2 {
 
         this._default_vol = settings.vol || 0.06;
 
-        this._volatility_algorithm =
-            volatilityAlgorithms[
-                settings.volatility_algorithm || "newprocedure"
+        this._volatilityAlgorithm =
+            this.volatilityAlgorithms[
+                settings.volatilityAlgorithm || "newProcedure"
             ];
     }
 
-    public makeRace(results: [Player][]) {
+    public makeRace(results: [Player][]): Race {
         return new Race(results);
     }
 
     /**
      * Removes all the players from the cache
      */
-    public removePlayers() {
+    public removePlayers(): void {
         this.players = {};
         this.player_index = 0;
     }
@@ -285,11 +587,11 @@ export class Glicko2 {
     /**
      * @returns A object with the player index id as the key and the Player object as the member
      */
-    public getPlayers() {
+    public getPlayers(): Record<string, Player> {
         return this.players;
     }
 
-    public cleanPreviousMatches() {
+    public cleanPreviousMatches(): void {
         for (let i = 0; i < Object.keys(this.players).length; i++) {
             this.players[i].adv_ranks = [];
             this.players[i].adv_rds = [];
@@ -297,7 +599,7 @@ export class Glicko2 {
         }
     }
 
-    public calculatePlayersRatings() {
+    public calculatePlayersRatings(): void {
         const keys = Object.keys(this.players);
         for (let i = 0; i < keys.length; i++) {
             this.players[keys[i]].update_rank();
@@ -315,7 +617,7 @@ export class Glicko2 {
         player1: { rating: number; rd: number; vol: number; id: number },
         player2: { rating: number; rd: number; vol: number; id: number },
         outcome: number
-    ) {
+    ): { pl1: Player; pl2: Player } {
         const pl1 = this._createInternalPlayer(
             player1.rating,
             player1.rd,
@@ -336,7 +638,7 @@ export class Glicko2 {
      * We do not expose directly createInternalPlayer in order to prevent the assignation of a custom player id whose uniqueness could not be guaranteed
      * @returns A Player object of the new player
      */
-    public makePlayer(rating?: number, rd?: number, vol?: number) {
+    public makePlayer(rating?: number, rd?: number, vol?: number): Player {
         return this._createInternalPlayer(rating, rd, vol);
     }
 
@@ -372,7 +674,7 @@ export class Glicko2 {
 
         // Same reasoning and purpose as the above code regarding
         // `defaultRating`
-        playerProto.volatility_algorithm = this._volatility_algorithm;
+        playerProto.volatilityAlgorithm = this._volatilityAlgorithm;
 
         // Since this `Player`'s rating was calculated upon instantiation,
         // before the `defaultRating` was defined above, we much re-calculate
@@ -393,12 +695,12 @@ export class Glicko2 {
      * @param player2 The second player
      * @param outcome The outcome : 0 = defeat, 1 = victory, 0.5 = draw
      */
-    public addResult(player1: Player, player2: Player, outcome: number) {
+    public addResult(player1: Player, player2: Player, outcome: number): void {
         player1.addResult(player2, outcome);
         player2.addResult(player1, 1 - outcome);
     }
 
-    public updateRatings(matches: [Player, Player, number][]) {
+    public updateRatings(matches: [Player, Player, number][]): void {
         if (matches instanceof Race) {
             matches = matches.getMatches();
         }
@@ -412,298 +714,3 @@ export class Glicko2 {
         this.calculatePlayersRatings();
     }
 }
-
-export const volatilityAlgorithms: any = {
-    oldProcedure: function (v: number, delta: number) {
-        const sigma = this.__vol;
-        const phi = this.__rd;
-        const tau = this._tau;
-
-        let x1, x2, x3, y2, y3;
-        let result;
-
-        const upper = find_upper_falsep(phi, v, delta, tau);
-
-        const a = Math.log(Math.pow(sigma, 2));
-        let y1 = equation(phi, v, 0, a, tau, delta);
-        if (y1 > 0) {
-            result = upper;
-        } else {
-            x1 = 0;
-            x2 = x1;
-            y2 = y1;
-            x1 = x1 - 1;
-            y1 = equation(phi, v, x1, a, tau, delta);
-            while (y1 < 0) {
-                x2 = x1;
-                y2 = y1;
-                x1 = x1 - 1;
-                y1 = equation(phi, v, x1, a, tau, delta);
-            }
-            for (let i = 0; i < 21; i++) {
-                x3 = (y1 * (x1 - x2)) / (y2 - y1) + x1;
-                y3 = equation(phi, v, x3, a, tau, delta);
-                if (y3 > 0) {
-                    x1 = x3;
-                    y1 = y3;
-                } else {
-                    x2 = x3;
-                    y2 = y3;
-                }
-            }
-            if (Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2) > upper) {
-                result = upper;
-            } else {
-                result = Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2);
-            }
-        }
-        return result;
-
-        function newSigma(
-            sigma: number,
-            phi: number,
-            v: number,
-            delta: number,
-            tau: number
-        ): number {
-            const a = Math.log(Math.pow(sigma, 2));
-            let x = a;
-            let old_x = 0;
-            while (x != old_x) {
-                old_x = x;
-                const d = Math.pow(phi, 2) + v + Math.exp(old_x);
-                const h1 =
-                    -(old_x - a) / Math.pow(tau, 2) -
-                    (0.5 * Math.exp(old_x)) / d +
-                    0.5 * Math.exp(old_x) * Math.pow(delta / d, 2);
-                const h2 =
-                    -1 / Math.pow(tau, 2) -
-                    (0.5 * Math.exp(old_x) * (Math.pow(phi, 2) + v)) /
-                        Math.pow(d, 2) +
-                    (0.5 *
-                        Math.pow(delta, 2) *
-                        Math.exp(old_x) *
-                        (Math.pow(phi, 2) + v - Math.exp(old_x))) /
-                        Math.pow(d, 3);
-                x = old_x - h1 / h2;
-            }
-            return Math.exp(x / 2);
-        }
-
-        function equation(
-            phi: number,
-            v: number,
-            x: number,
-            a: number,
-            tau: number,
-            delta: number
-        ) {
-            const d = Math.pow(phi, 2) + v + Math.exp(x);
-            return (
-                -(x - a) / Math.pow(tau, 2) -
-                (0.5 * Math.exp(x)) / d +
-                0.5 * Math.exp(x) * Math.pow(delta / d, 2)
-            );
-        }
-
-        function newSigma_bisection(
-            sigma: number,
-            phi: number,
-            v: number,
-            delta: number,
-            tau: number
-        ) {
-            let x1, x2, x3;
-            const a = Math.log(Math.pow(sigma, 2));
-            if (equation(phi, v, 0, a, tau, delta) < 0) {
-                x1 = -1;
-                while (equation(phi, v, x1, a, tau, delta) < 0) {
-                    x1 = x1 - 1;
-                }
-                x2 = x1 + 1;
-            } else {
-                x2 = 1;
-                while (equation(phi, v, x2, a, tau, delta) > 0) {
-                    x2 = x2 + 1;
-                }
-                x1 = x2 - 1;
-            }
-
-            for (let i = 0; i < 27; i++) {
-                x3 = (x1 + x2) / 2;
-                if (equation(phi, v, x3, a, tau, delta) > 0) {
-                    x1 = x3;
-                } else {
-                    x2 = x3;
-                }
-            }
-            return Math.exp((x1 + x2) / 4);
-        }
-
-        function Dequation(
-            phi: number,
-            v: number,
-            x: number,
-            tau: number,
-            delta: number
-        ) {
-            const d = Math.pow(phi, 2) + v + Math.exp(x);
-            return (
-                -1 / Math.pow(tau, 2) -
-                (0.5 * Math.exp(x)) / d +
-                (0.5 * Math.exp(x) * (Math.exp(x) + Math.pow(delta, 2))) /
-                    Math.pow(d, 2) -
-                (Math.pow(Math.exp(x), 2) * Math.pow(delta, 2)) / Math.pow(d, 3)
-            );
-        }
-
-        function find_upper_falsep(
-            phi: number,
-            v: number,
-            delta: number,
-            tau: number
-        ) {
-            let x1, x2, x3, y1, y2, y3;
-            y1 = Dequation(phi, v, 0, tau, delta);
-            if (y1 < 0) {
-                return 1;
-            } else {
-                x1 = 0;
-                x2 = x1;
-                y2 = y1;
-                x1 = x1 - 1;
-                y1 = Dequation(phi, v, x1, tau, delta);
-                while (y1 > 0) {
-                    x2 = x1;
-                    y2 = y1;
-                    x1 = x1 - 1;
-                    y1 = Dequation(phi, v, x1, tau, delta);
-                }
-                for (let i = 0; i < 21; i++) {
-                    x3 = (y1 * (x1 - x2)) / (y2 - y1) + x1;
-                    y3 = Dequation(phi, v, x3, tau, delta);
-                    if (y3 > 0) {
-                        x1 = x3;
-                        y1 = y3;
-                    } else {
-                        x2 = x3;
-                        y2 = y3;
-                    }
-                }
-                return Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2);
-            }
-        }
-    },
-    newprocedure: function (v: number, delta: number) {
-        //Step 5.1
-        let A = Math.log(Math.pow(this.__vol, 2));
-        const f = this._makef(delta, v, A);
-        const epsilon = 0.0000001;
-
-        //Step 5.2
-        let B, k;
-        if (Math.pow(delta, 2) > Math.pow(this.__rd, 2) + v) {
-            B = Math.log(Math.pow(delta, 2) - Math.pow(this.__rd, 2) - v);
-        } else {
-            k = 1;
-            while (f(A - k * this._tau) < 0) {
-                k = k + 1;
-            }
-            B = A - k * this._tau;
-        }
-
-        //Step 5.3
-        let fA = f(A);
-        let fB = f(B);
-
-        //Step 5.4
-        let C, fC;
-        while (Math.abs(B - A) > epsilon) {
-            C = A + ((A - B) * fA) / (fB - fA);
-            fC = f(C);
-            if (fC * fB < 0) {
-                A = B;
-                fA = fB;
-            } else {
-                fA = fA / 2;
-            }
-            B = C;
-            fB = fC;
-        }
-        //Step 5.5
-        return Math.exp(A / 2);
-    },
-    newprocedure_mod: function (v: number, delta: number) {
-        //Step 5.1
-        let A = Math.log(Math.pow(this.__vol, 2));
-        const f = this._makef(delta, v, A);
-        const epsilon = 0.0000001;
-
-        //Step 5.2
-        let B, k;
-        //XXX mod
-        if (delta > Math.pow(this.__rd, 2) + v) {
-            //XXX mod
-            B = Math.log(delta - Math.pow(this.__rd, 2) - v);
-        } else {
-            k = 1;
-            while (f(A - k * this._tau) < 0) {
-                k = k + 1;
-            }
-            B = A - k * this._tau;
-        }
-
-        //Step 5.3
-        let fA = f(A);
-        let fB = f(B);
-
-        //Step 5.4
-        let C, fC;
-        while (Math.abs(B - A) > epsilon) {
-            C = A + ((A - B) * fA) / (fB - fA);
-            fC = f(C);
-            if (fC * fB < 0) {
-                A = B;
-                fA = fB;
-            } else {
-                fA = fA / 2;
-            }
-            B = C;
-            fB = fC;
-        }
-        //Step 5.5
-        return Math.exp(A / 2);
-    },
-    oldProcedure_simple: function (v: number, delta: number) {
-        const a = Math.log(Math.pow(this.__vol, 2));
-        const tau = this._tau;
-        let x0 = a;
-        let x1 = 0;
-        let d, h1, h2;
-
-        while (Math.abs(x0 - x1) > 0.00000001) {
-            // New iteration, so x(i) becomes x(i-1)
-            x0 = x1;
-            d = Math.pow(this.__rating, 2) + v + Math.exp(x0);
-            h1 =
-                -(x0 - a) / Math.pow(tau, 2) -
-                (0.5 * Math.exp(x0)) / d +
-                0.5 * Math.exp(x0) * Math.pow(delta / d, 2);
-            h2 =
-                -1 / Math.pow(tau, 2) -
-                (0.5 * Math.exp(x0) * (Math.pow(this.__rating, 2) + v)) /
-                    Math.pow(d, 2) +
-                (0.5 *
-                    Math.pow(delta, 2) *
-                    Math.exp(x0) *
-                    (Math.pow(this.__rating, 2) + v - Math.exp(x0))) /
-                    Math.pow(d, 3);
-            x1 = x0 - h1 / h2;
-        }
-
-        return Math.exp(x1 / 2);
-    },
-};
-
-volatilityAlgorithms.newSigma_bisection();
-volatilityAlgorithms.newSigma();
