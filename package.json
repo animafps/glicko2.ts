@@ -7,7 +7,7 @@
         "ranking",
         "glicko2"
     ],
-    "version": "1.0.2",
+    "version": "1.0.3",
     "license": "MIT",
     "main": "dist/glicko2.js",
     "types": "dist/glicko2.d.ts",
