@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/animafps/glicko2.ts/compare/v1.0.2...v1.0.3) (2021-08-30)
+
+
+### Bug Fixes
+
+* the race class not computing matches correctly and added testing ([d63e461](https://github.com/animafps/glicko2.ts/commit/d63e461e0af14e6e540ebf602e692d725328310c))
+
 ## [1.0.2](https://github.com/animafps/glicko2.ts/compare/v1.0.1...v1.0.2) (2021-08-29)
 
 
