@@ -25,15 +25,20 @@ The class for a Race which is a match that includes more than 2 competitors
 
 • **new Race**(`results`)
 
+**`example`**
+```ts
+const race = new Race([[player1], [player2, player3], [player4]])
+```
+
 #### Parameters
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `results` | [[`Player`](Player.md)][] | An ordered array of the race results with the winner in index 0 |
+| `results` | [`Player`](Player.md)[][] | An ordered array of the race results with the winner in index 0, for all the players who tied on result they go into the same array |
 
 #### Defined in
 
-[glicko2.ts:14](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L14)
+[glicko2.ts:18](https://github.com/animafps/glicko2.ts/blob/8bb9068/glicko2.ts#L18)
 
 ## Properties
 
@@ -45,7 +50,7 @@ Array of the matches and outcomes based on the race results
 
 #### Defined in
 
-[glicko2.ts:10](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L10)
+[glicko2.ts:10](https://github.com/animafps/glicko2.ts/blob/8bb9068/glicko2.ts#L10)
 
 ## Methods
 
@@ -59,7 +64,7 @@ Turns an array of race results to an array of matches and outcomes
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `results` | [[`Player`](Player.md)][] | An ordered array of the race results with the winner in index 0 |
+| `results` | [`Player`](Player.md)[][] | An ordered array of the race results with the winner in index 0 |
 
 #### Returns
 
@@ -69,7 +74,7 @@ An array of matches and outcomes based on the race results
 
 #### Defined in
 
-[glicko2.ts:30](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L30)
+[glicko2.ts:34](https://github.com/animafps/glicko2.ts/blob/8bb9068/glicko2.ts#L34)
 
 ___
 
@@ -81,8 +86,8 @@ ___
 
 [[`Player`](Player.md), [`Player`](Player.md), `number`][]
 
-An array of the matches within the race
+An array of the matches within the race [Player, Player, ]
 
 #### Defined in
 
-[glicko2.ts:21](https://github.com/animafps/glicko2.ts/blob/4dc3ea7/glicko2.ts#L21)
+[glicko2.ts:25](https://github.com/animafps/glicko2.ts/blob/8bb9068/glicko2.ts#L25)

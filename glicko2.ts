@@ -9,7 +9,11 @@ export class Race {
      */
     public matches: [Player, Player, number][] = [];
     /**
-     * @param results An ordered array of the race results with the winner in index 0
+     * @param results An ordered array of the race results with the winner in index 0, for all the players who tied on result they go into the same array
+     * @example
+     * ```ts
+     * const race = new Race([[player1], [player2, player3], [player4]])
+     * ```
      */
     constructor(results: Player[][]) {
         this.matches = this.computeMatches(results);
@@ -601,9 +605,10 @@ export class Glicko2 {
 
         this._default_vol = settings.vol;
 
-        this._volatilityAlgorithm = new Player(1, 1, 1, 1).volatilityAlgorithms[
-            settings.volatilityAlgorithm
-        ];
+        this._volatilityAlgorithm =
+            Object.getPrototypeOf(Player).volatilityAlgorithms[
+                settings.volatilityAlgorithm
+            ];
     }
 
     public makeRace(results: [Player][]): Race {
