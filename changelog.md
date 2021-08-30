@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/animafps/glicko2.ts/compare/v1.0.3...v1.0.4) (2021-08-30)
+
+
+### Bug Fixes
+
+* fixed incorrect use of a player object and added some documentation and tests ([b487c45](https://github.com/animafps/glicko2.ts/commit/b487c45843ebab276829e6ab930dc80069d467c5))
+
 ## [1.0.3](https://github.com/animafps/glicko2.ts/compare/v1.0.2...v1.0.3) (2021-08-30)
 
 
