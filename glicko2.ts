@@ -11,12 +11,12 @@ export class Race {
     /**
      * @param results An ordered array of the race results with the winner in index 0
      */
-    constructor(results: [Player][]) {
+    constructor(results: Player[][]) {
         this.matches = this.computeMatches(results);
     }
 
     /**
-     * @returns An array of the matches within the race
+     * @returns An array of the matches within the race [Player, Player, ]
      */
     public getMatches(): [Player, Player, number][] {
         return this.matches;
@@ -27,7 +27,7 @@ export class Race {
      * @param results An ordered array of the race results with the winner in index 0
      * @returns An array of matches and outcomes based on the race results
      */
-    public computeMatches(results: [Player][]): [Player, Player, number][] {
+    public computeMatches(results: Player[][]): [Player, Player, number][] {
         const players: { player: Player; position: number }[] = [];
         let position = 0;
 
@@ -38,26 +38,31 @@ export class Race {
             });
         });
 
-        function computeMatchesFunction(
+        function computeMatches(
             players: { player: Player; position: number }[]
-        ): (number | Player)[][] {
+        ): [Player, Player, number][] {
+            if (players.length === 0) return [];
+
             const player1 = players.shift() ?? {
                 player: new Player(321, 321, 321, 321),
                 position: 1,
             };
-            const player1Results = players.map(
-                (player2: { player: Player; position: number }) => {
-                    return [
-                        player1.player,
-                        player2.player,
-                        player1.position < player2.position ? 1 : 0.5,
-                    ];
-                }
-            );
-            return player1Results.concat(computeMatchesFunction(players));
+            const player1_results = players.map((player2) => {
+                return [
+                    player1.player,
+                    player2.player,
+                    player1.position < player2.position ? 1 : 0.5,
+                ];
+            });
+
+            return player1_results.concat(computeMatches(players)) as [
+                Player,
+                Player,
+                number
+            ][];
         }
 
-        return computeMatchesFunction(players) as [Player, Player, number][];
+        return computeMatches(players);
     }
 }
 
@@ -395,7 +400,7 @@ export class Player {
 
     /**
      * Adds a result to the players object
-     * @param outcome
+     * @param outcome The outcome : 0 = defeat, 1 = victory, 0.5 = draw
      */
     public addResult(opponent: Player, outcome: number): void {
         this.adv_ranks.push(opponent.__rating);
@@ -526,13 +531,18 @@ export class Player {
  * The main class of the rating system
  */
 export class Glicko2 {
-    private _tau: number;
+    private _tau;
     private _default_rating;
     private _default_rd;
     private _default_vol;
+    /**
+     * An object of all the players cached with their key as their id
+     * @default {}
+     */
     public players: Record<string, Player> = {};
     /**
      * The number of players in the record
+     * @default 0
      */
     public players_index = 0;
     private _volatilityAlgorithm: (v: number, delta: number) => number;

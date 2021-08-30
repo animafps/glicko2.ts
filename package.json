@@ -18,24 +18,29 @@
     "devDependencies": {
         "@semantic-release/changelog": "^5.0.1",
         "@semantic-release/git": "^9.0.0",
+        "@types/jest": "^27.0.1",
         "@types/node": "^16.4.10",
         "@typescript-eslint/eslint-plugin": "^4.28.5",
         "@typescript-eslint/parser": "^4.28.5",
         "cz-conventional-changelog": "^3.3.0",
         "eslint": "^7.32.0",
+        "jest": "^27.1.0",
+        "prettier": "^2.3.2",
         "semantic-release": "^17.4.7",
+        "ts-jest": "^27.0.5",
         "ts-node": "^10.1.0",
         "typedoc": "^0.21.5",
         "typedoc-plugin-markdown": "^3.10.4",
-        "typescript": "^4.3.5",
-        "prettier": "^2.3.2"
+        "typescript": "^4.3.5"
     },
     "scripts": {
         "doc": "typedoc --out docs --readme none glicko2.ts",
         "prepare": "tsc",
         "lint": "eslint glicko2.ts",
         "lint:fix": "eslint glicko2.ts --fix",
-        "prettier": "prettier -c glicko2.ts"
+        "prettier": "prettier -c glicko2.ts",
+        "test": "jest",
+        "test:coverage": "jest --collectCoverage"
     },
     "config": {
         "commitizen": {
