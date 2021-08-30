@@ -605,10 +605,9 @@ export class Glicko2 {
 
         this._default_vol = settings.vol;
 
-        this._volatilityAlgorithm =
-            Object.getPrototypeOf(Player).volatilityAlgorithms[
-                settings.volatilityAlgorithm
-            ];
+        this._volatilityAlgorithm = new Player(1, 1, 1, 1).volatilityAlgorithms[
+            settings.volatilityAlgorithm
+        ];
     }
 
     public makeRace(results: [Player][]): Race {
