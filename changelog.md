@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/animafps/glicko2.ts/compare/v1.0.5...v1.0.6) (2021-08-30)
+
+
+### Bug Fixes
+
+* fixed docs not being displayed correctly ([c6953a4](https://github.com/animafps/glicko2.ts/commit/c6953a47dc236e548eaf053c62622c46ff579cdc))
+
 ## [1.0.5](https://github.com/animafps/glicko2.ts/compare/v1.0.4...v1.0.5) (2021-08-30)
 
 
