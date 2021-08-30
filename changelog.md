@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/animafps/glicko2.ts/compare/v1.0.4...v1.0.5) (2021-08-30)
+
+
+### Bug Fixes
+
+* **glicko2.ts:** fixed error with the algorithm being undefined in the glicko2 class ([986e6d8](https://github.com/animafps/glicko2.ts/commit/986e6d8b4343422dcbd8b9f5f3c48d015ddc7a82))
+
 ## [1.0.4](https://github.com/animafps/glicko2.ts/compare/v1.0.3...v1.0.4) (2021-08-30)
 
 
