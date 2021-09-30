@@ -60,7 +60,7 @@ The class for a player object
 
 #### Defined in
 
-[glicko2.ts:355](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L355)
+[glicko2.ts:355](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L355)
 
 ## Properties
 
@@ -72,7 +72,7 @@ Internal rating in the Glicko-2 scale
 
 #### Defined in
 
-[glicko2.ts:84](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L84)
+[glicko2.ts:84](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L84)
 
 ___
 
@@ -84,7 +84,7 @@ Internal rating deviation
 
 #### Defined in
 
-[glicko2.ts:88](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L88)
+[glicko2.ts:88](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L88)
 
 ___
 
@@ -96,7 +96,7 @@ Internal volatility
 
 #### Defined in
 
-[glicko2.ts:92](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L92)
+[glicko2.ts:92](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L92)
 
 ___
 
@@ -108,7 +108,7 @@ Internal value for Tau
 
 #### Defined in
 
-[glicko2.ts:80](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L80)
+[glicko2.ts:80](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L80)
 
 ___
 
@@ -120,7 +120,7 @@ An array of the ratings of the opponents faced
 
 #### Defined in
 
-[glicko2.ts:96](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L96)
+[glicko2.ts:96](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L96)
 
 ___
 
@@ -132,7 +132,7 @@ An array of the rating deviations of the opponents faced
 
 #### Defined in
 
-[glicko2.ts:100](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L100)
+[glicko2.ts:100](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L100)
 
 ___
 
@@ -146,7 +146,7 @@ The default rating of the player
 
 #### Defined in
 
-[glicko2.ts:109](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L109)
+[glicko2.ts:109](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L109)
 
 ___
 
@@ -160,7 +160,7 @@ The id of the player
 
 #### Defined in
 
-[glicko2.ts:114](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L114)
+[glicko2.ts:114](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L114)
 
 ___
 
@@ -172,7 +172,7 @@ An array of the outcomes the player has been in
 
 #### Defined in
 
-[glicko2.ts:104](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L104)
+[glicko2.ts:104](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L104)
 
 ___
 
@@ -199,7 +199,7 @@ The volatility algorithm used by the player
 
 #### Defined in
 
-[glicko2.ts:118](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L118)
+[glicko2.ts:118](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L118)
 
 ___
 
@@ -220,7 +220,7 @@ Object of various algorithms that can be used by the ranking system
 
 #### Defined in
 
-[glicko2.ts:122](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L122)
+[glicko2.ts:122](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L122)
 
 ## Methods
 
@@ -243,7 +243,7 @@ The Glicko E function.
 
 #### Defined in
 
-[glicko2.ts:505](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L505)
+[glicko2.ts:505](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L505)
 
 ___
 
@@ -266,7 +266,7 @@ Calculation of the estimated improvement in rating (step 4 of the algorithm)
 
 #### Defined in
 
-[glicko2.ts:522](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L522)
+[glicko2.ts:522](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L522)
 
 ___
 
@@ -288,7 +288,7 @@ The Glicko2 g(RD) function.
 
 #### Defined in
 
-[glicko2.ts:514](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L514)
+[glicko2.ts:514](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L514)
 
 ___
 
@@ -304,7 +304,7 @@ Calculation of the estimated letiance of the player's rating based on game outco
 
 #### Defined in
 
-[glicko2.ts:492](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L492)
+[glicko2.ts:492](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L492)
 
 ___
 
@@ -340,7 +340,7 @@ Makes the f functions for value a and b
 
 #### Defined in
 
-[glicko2.ts:536](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L536)
+[glicko2.ts:536](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L536)
 
 ___
 
@@ -357,7 +357,7 @@ preRatingRD() -> None
 
 #### Defined in
 
-[glicko2.ts:485](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L485)
+[glicko2.ts:485](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L485)
 
 ___
 
@@ -380,7 +380,7 @@ Adds a result to the players object
 
 #### Defined in
 
-[glicko2.ts:427](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L427)
+[glicko2.ts:427](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L427)
 
 ___
 
@@ -396,7 +396,7 @@ The rating of the player in the Glicko format
 
 #### Defined in
 
-[glicko2.ts:366](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L366)
+[glicko2.ts:366](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L366)
 
 ___
 
@@ -419,7 +419,7 @@ An object of the players rating, rating deviation, volatility and the recent out
 
 #### Defined in
 
-[glicko2.ts:409](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L409)
+[glicko2.ts:409](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L409)
 
 ___
 
@@ -435,7 +435,7 @@ The rating deviation of the player
 
 #### Defined in
 
-[glicko2.ts:381](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L381)
+[glicko2.ts:381](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L381)
 
 ___
 
@@ -451,7 +451,7 @@ The volatility value of the player
 
 #### Defined in
 
-[glicko2.ts:395](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L395)
+[glicko2.ts:395](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L395)
 
 ___
 
@@ -467,7 +467,7 @@ A boolean value of if the player has played a game
 
 #### Defined in
 
-[glicko2.ts:477](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L477)
+[glicko2.ts:477](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L477)
 
 ___
 
@@ -489,7 +489,7 @@ Sets the rating of the player
 
 #### Defined in
 
-[glicko2.ts:374](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L374)
+[glicko2.ts:374](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L374)
 
 ___
 
@@ -511,7 +511,7 @@ Sets the rating deviation of the player
 
 #### Defined in
 
-[glicko2.ts:388](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L388)
+[glicko2.ts:388](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L388)
 
 ___
 
@@ -533,7 +533,7 @@ Sets the volatility value of the player
 
 #### Defined in
 
-[glicko2.ts:402](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L402)
+[glicko2.ts:402](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L402)
 
 ___
 
@@ -550,4 +550,4 @@ Follows the steps of the algorithm described at http://www.glicko.net/glicko/gli
 
 #### Defined in
 
-[glicko2.ts:437](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L437)
+[glicko2.ts:437](https://github.com/animafps/glicko2.ts/blob/24ea2b7/glicko2.ts#L437)

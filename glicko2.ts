@@ -20,7 +20,7 @@ export class Race {
     }
 
     /**
-     * @returns An array of the matches within the race [Player, Player, ]
+     * @returns An array of the matches within the race in the format [Player, Player, placement][]
      */
     public getMatches(): [Player, Player, number][] {
         return this.matches;
@@ -74,9 +74,21 @@ export class Race {
  * The class for a player object
  */
 export class Player {
+    /**
+     * Internal value for Tau
+     */
     private _tau: number;
+    /**
+     * Internal rating in the Glicko-2 scale
+     */
     private __rating: number;
+    /**
+     * Internal rating deviation
+     */
     private __rd: number;
+    /**
+     * Internal volatility
+     */
     private __vol: number;
     /**
      * An array of the ratings of the opponents faced
@@ -334,6 +346,12 @@ export class Player {
             return Math.exp(x1 / 2);
         },
     };
+    /**
+     * @param rating The rating of the new player in Glicko format
+     * @param rd
+     * @param vol
+     * @param tau
+     */
     constructor(rating: number, rd: number, vol: number, tau: number) {
         this._tau = tau;
         this.__rating = (rating - this.defaultRating) / scalingFactor;
@@ -404,7 +422,7 @@ export class Player {
 
     /**
      * Adds a result to the players object
-     * @param outcome The outcome : 0 = defeat, 1 = victory, 0.5 = draw
+     * @param outcome The outcome: 0 = defeat, 1 = victory, 0.5 = draw
      */
     public addResult(opponent: Player, outcome: number): void {
         this.adv_ranks.push(opponent.__rating);
@@ -535,9 +553,21 @@ export class Player {
  * The main class of the rating system
  */
 export class Glicko2 {
+    /**
+     * Internal default tau value for new players
+     */
     private _tau;
+    /**
+     * Internal default rating in glicko format for new players
+     */
     private _default_rating;
+    /**
+     * Internal default rating deviation for new players
+     */
     private _default_rd;
+    /**
+     * Internal default volatility for new players
+     */
     private _default_vol;
     /**
      * An object of all the players cached with their key as their id
@@ -549,6 +579,9 @@ export class Glicko2 {
      * @default 0
      */
     public players_index = 0;
+    /**
+     * The internal default volatility algorithm used by the Glicko2 object when making new players
+     */
     private _volatilityAlgorithm: (v: number, delta: number) => number;
     constructor(
         settings: {
@@ -610,7 +643,10 @@ export class Glicko2 {
         ];
     }
 
-    public makeRace(results: [Player][]): Race {
+    /**
+     * @returns A Race object from the results
+     */
+    public makeRace(results: Player[][]): Race {
         return new Race(results);
     }
 
@@ -651,11 +687,12 @@ export class Glicko2 {
     }
 
     /**
-     * Add players and match result to be taken in account for the new rankings calculation
+     * Creates players and match result to be taken in account for the new rankings calculation
      * players must have ids, they are not created if it has been done already.
      * @param player1 The first player
      * @param player2 The second player
-     * @param outcome The outcome for the first player : 0 = defeat, 1 = victory, 0.5 = draw
+     * @param outcome The outcome for the first player: 0 = defeat, 1 = victory, 0.5 = draw
+     * @returns An object of the new player objects
      */
     public addMatch(
         player1: { rating: number; rd: number; vol: number; id: number },
@@ -679,6 +716,7 @@ export class Glicko2 {
     }
 
     /**
+     * Creates a new player and adds it to the cache
      * We do not expose directly createInternalPlayer in order to prevent the assignation of a custom player id whose uniqueness could not be guaranteed
      * @returns A Player object of the new player
      */
@@ -744,7 +782,19 @@ export class Glicko2 {
         player2.addResult(player1, 1 - outcome);
     }
 
-    public updateRatings(matches: [Player, Player, number][]): void {
+    /**
+     * Gets all the matches from the race(if is an instance of one), calculates player ratings then cleans all the matches
+     * @param matches Any matches or race during the rating period
+     * @example
+     * ```ts
+     * Glicko2.updateRatings([
+     *  [Player1, Player2, 1],
+     *  [Player2, Player4, 0],
+     *  [Player3, Player1, 1]
+     * ]);
+     * ```
+     */
+    public updateRatings(matches: [Player, Player, number][] | Race): void {
         if (matches instanceof Race) {
             matches = matches.getMatches();
         }
