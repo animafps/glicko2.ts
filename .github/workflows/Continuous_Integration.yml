@@ -14,21 +14,11 @@ jobs:
               uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c # renovate: tag=v2
               with:
                   node-version: 16
-            - name: Get yarn cache directory path
-              id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-            - uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # renovate: tag=v2
-              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-              with:
-                path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-                restore-keys: |
-                  ${{ runner.os }}-yarn-
+                  cache: "yarn"
             - name: Install dependencies
-                run: yarn install --immutable
-                if: steps.yarn-cache.outputs.cache-hit != 'true'
+              run: yarn install
             - name: Run ESLint
-                run: yarn lint
+              run: yarn lint
     Build:
         name: Build Source Code
         runs-on: ubuntu-latest
@@ -39,21 +29,11 @@ jobs:
               uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c # renovate: tag=v2
               with:
                   node-version: 16
-            - name: Get yarn cache directory path
-              id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-            - uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # renovate: tag=v2
-              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-              with:
-                path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-                restore-keys: |
-                  ${{ runner.os }}-yarn-
+                  cache: "yarn"
             - name: Install dependencies
-                run: yarn install --immutable
-                if: steps.yarn-cache.outputs.cache-hit != 'true'
+              run: yarn install
             - name: Run tsc
-                run: yarn build
+              run: yarn build
 
     Testing:
         name: Unit Tests
@@ -65,19 +45,9 @@ jobs:
               uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c # renovate: tag=v2
               with:
                   node-version: "16"
-            - name: Get yarn cache directory path
-              id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-            - uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # renovate: tag=v2
-              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-              with:
-                path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-                restore-keys: |
-                  ${{ runner.os }}-yarn-
+                  cache: "yarn"
             - name: Install dependencies
-                if: steps.yarn-cache.outputs.cache-hit != 'true'
-                run: yarn install --immutable
+              run: yarn install
             - name: Test
               run: npm run test:coverage
             - name: Store code coverage report
@@ -120,19 +90,9 @@ jobs:
               uses: actions/setup-node@f1f314fca9dfce2769ece7d933488f076716723e # renovate: tag=v1
               with:
                   node-version: "16"
-            - name: Get yarn cache directory path
-              id: yarn-cache-dir-path
-              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-            - uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # renovate: tag=v2
-              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-              with:
-                path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-                key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-                restore-keys: |
-                  ${{ runner.os }}-yarn-
+                  cache: "yarn"
             - name: Install dependencies
-                if: steps.yarn-cache.outputs.cache-hit != 'true'
-                run: yarn install --immutable
+              run: yarn install
             - name: Release
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
