@@ -1,5 +1,6 @@
 # glicko2.ts
 [![Codecov](https://img.shields.io/codecov/c/github/animafps/glicko2.ts?style=flat-square&token=rPThDl0sCn)](https://codecov.io/gh/animafps/glicko2.ts)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/animafps/glicko2.ts/Continuous%20Integration?style=flat-square)](https://github.com/animafps/glicko2.ts/actions)
 
 ## About
 
