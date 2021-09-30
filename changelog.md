@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/animafps/glicko2.ts/compare/v1.0.6...v1.1.0) (2021-09-30)
+
+
+### Features
+
+* **glicko2.ts:** finished typing the file ([a9b5b90](https://github.com/animafps/glicko2.ts/commit/a9b5b9005ed36366fcc74b02a95d7820b9094770))
+
 ## [1.0.6](https://github.com/animafps/glicko2.ts/compare/v1.0.5...v1.0.6) (2021-08-30)
 
 
