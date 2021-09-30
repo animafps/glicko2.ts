@@ -1,4 +1,5 @@
 # glicko2.ts
+[![Codecov](https://img.shields.io/codecov/c/github/animafps/glicko2.ts?style=flat-square&token=rPThDl0sCn)](https://codecov.io/gh/animafps/glicko2.ts)
 
 ## About
 
@@ -30,6 +31,6 @@ https://deno.land/x/glicko2/glicko2.ts
 
 ## Usage
 
-Documentation is still being written and will get it up soon
+Usage documentation is still being written and will get it up soon
 
 [Typedoc generated documentation](docs/README.md)

@@ -38,7 +38,7 @@ const race = new Race([[player1], [player2, player3], [player4]])
 
 #### Defined in
 
-[glicko2.ts:18](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L18)
+[glicko2.ts:18](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L18)
 
 ## Properties
 
@@ -50,7 +50,7 @@ Array of the matches and outcomes based on the race results
 
 #### Defined in
 
-[glicko2.ts:10](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L10)
+[glicko2.ts:10](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L10)
 
 ## Methods
 
@@ -74,7 +74,7 @@ An array of matches and outcomes based on the race results
 
 #### Defined in
 
-[glicko2.ts:34](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L34)
+[glicko2.ts:34](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L34)
 
 ___
 
@@ -86,8 +86,8 @@ ___
 
 [[`Player`](Player.md), [`Player`](Player.md), `number`][]
 
-An array of the matches within the race [Player, Player, ]
+An array of the matches within the race in the format [Player, Player, placement][]
 
 #### Defined in
 
-[glicko2.ts:25](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L25)
+[glicko2.ts:25](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L25)

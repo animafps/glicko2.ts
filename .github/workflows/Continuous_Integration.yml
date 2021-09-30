@@ -10,22 +10,25 @@ jobs:
         steps:
             - name: Checkout Project
               uses: actions/checkout@v2
-            - name: Use Node.js v16
+            - name: Use Node.js
               uses: actions/setup-node@v2
               with:
                   node-version: 16
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
             - uses: actions/cache@v2
-              id: npm-cache
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
               with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-
+                path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                restore-keys: |
+                  ${{ runner.os }}-yarn-
             - name: Install dependencies
-              if: steps.npm-cache.outputs.cache-hit != 'true'
-              run: npm ci
+                if: steps.yarn-cache.outputs.cache-hit != 'true'
+                run: yarn install --immutable
             - name: Run ESLint
-              run: npm run lint
+                run: yarn lint
 
     Testing:
         name: Unit Tests
@@ -36,17 +39,20 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v2
               with:
-                  node-version: "14"
+                  node-version: "16"
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
             - uses: actions/cache@v2
-              id: npm-cache
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
               with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-
+                path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                restore-keys: |
+                  ${{ runner.os }}-yarn-
             - name: Install dependencies
-              if: steps.npm-cache.outputs.cache-hit != 'true'
-              run: npm ci
+                if: steps.yarn-cache.outputs.cache-hit != 'true'
+                run: yarn install --immutable
             - name: Test
               run: npm run test:coverage
             - name: Store code coverage report
@@ -75,3 +81,35 @@ jobs:
                   token: ${{ secrets.CODECOV_TOKEN }}
                   directory: coverage/
                   fail_ci_if_error: true
+
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+                  persist-credentials: false
+            - name: Setup Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: "16"
+            - name: Get yarn cache directory path
+              id: yarn-cache-dir-path
+              run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+            - uses: actions/cache@v2
+              id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+              with:
+                path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                restore-keys: |
+                  ${{ runner.os }}-yarn-
+            - name: Install dependencies
+                if: steps.yarn-cache.outputs.cache-hit != 'true'
+                run: yarn install --immutable
+            - name: Release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: yarn release

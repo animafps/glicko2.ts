@@ -52,7 +52,7 @@ The main class of the rating system
 
 #### Defined in
 
-[glicko2.ts:553](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L553)
+[glicko2.ts:586](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L586)
 
 ## Properties
 
@@ -60,9 +60,11 @@ The main class of the rating system
 
 • `Private` **\_default\_rating**: `number`
 
+Internal default rating in glicko format for new players
+
 #### Defined in
 
-[glicko2.ts:539](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L539)
+[glicko2.ts:563](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L563)
 
 ___
 
@@ -70,9 +72,11 @@ ___
 
 • `Private` **\_default\_rd**: `number`
 
+Internal default rating deviation for new players
+
 #### Defined in
 
-[glicko2.ts:540](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L540)
+[glicko2.ts:567](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L567)
 
 ___
 
@@ -80,9 +84,11 @@ ___
 
 • `Private` **\_default\_vol**: `number`
 
+Internal default volatility for new players
+
 #### Defined in
 
-[glicko2.ts:541](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L541)
+[glicko2.ts:571](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L571)
 
 ___
 
@@ -90,9 +96,11 @@ ___
 
 • `Private` **\_tau**: `number`
 
+Internal default tau value for new players
+
 #### Defined in
 
-[glicko2.ts:538](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L538)
+[glicko2.ts:559](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L559)
 
 ___
 
@@ -103,6 +111,8 @@ ___
 #### Type declaration
 
 ▸ (`v`, `delta`): `number`
+
+The internal default volatility algorithm used by the Glicko2 object when making new players
 
 ##### Parameters
 
@@ -117,7 +127,7 @@ ___
 
 #### Defined in
 
-[glicko2.ts:552](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L552)
+[glicko2.ts:585](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L585)
 
 ___
 
@@ -131,7 +141,7 @@ An object of all the players cached with their key as their id
 
 #### Defined in
 
-[glicko2.ts:546](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L546)
+[glicko2.ts:576](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L576)
 
 ___
 
@@ -145,7 +155,7 @@ The number of players in the record
 
 #### Defined in
 
-[glicko2.ts:551](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L551)
+[glicko2.ts:581](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L581)
 
 ## Methods
 
@@ -168,7 +178,7 @@ The number of players in the record
 
 #### Defined in
 
-[glicko2.ts:689](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L689)
+[glicko2.ts:727](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L727)
 
 ___
 
@@ -176,7 +186,7 @@ ___
 
 ▸ **addMatch**(`player1`, `player2`, `outcome`): `Object`
 
-Add players and match result to be taken in account for the new rankings calculation
+Creates players and match result to be taken in account for the new rankings calculation
 players must have ids, they are not created if it has been done already.
 
 #### Parameters
@@ -193,11 +203,13 @@ players must have ids, they are not created if it has been done already.
 | `player2.rating` | `number` | - |
 | `player2.rd` | `number` | - |
 | `player2.vol` | `number` | - |
-| `outcome` | `number` | The outcome for the first player : 0 = defeat, 1 = victory, 0.5 = draw |
+| `outcome` | `number` | The outcome for the first player: 0 = defeat, 1 = victory, 0.5 = draw |
 
 #### Returns
 
 `Object`
+
+An object of the new player objects
 
 | Name | Type |
 | :------ | :------ |
@@ -206,7 +218,7 @@ players must have ids, they are not created if it has been done already.
 
 #### Defined in
 
-[glicko2.ts:660](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L660)
+[glicko2.ts:697](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L697)
 
 ___
 
@@ -230,7 +242,7 @@ Add a match result to be taken in account for the new rankings calculation
 
 #### Defined in
 
-[glicko2.ts:742](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L742)
+[glicko2.ts:780](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L780)
 
 ___
 
@@ -246,7 +258,7 @@ Updates the ratings for all the players
 
 #### Defined in
 
-[glicko2.ts:646](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L646)
+[glicko2.ts:682](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L682)
 
 ___
 
@@ -262,7 +274,7 @@ Removes all of the previous matches from each of the players objects
 
 #### Defined in
 
-[glicko2.ts:635](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L635)
+[glicko2.ts:671](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L671)
 
 ___
 
@@ -278,7 +290,7 @@ A object with the player index id as the key and the Player object as the member
 
 #### Defined in
 
-[glicko2.ts:628](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L628)
+[glicko2.ts:664](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L664)
 
 ___
 
@@ -286,6 +298,7 @@ ___
 
 ▸ **makePlayer**(`rating?`, `rd?`, `vol?`): [`Player`](Player.md)
 
+Creates a new player and adds it to the cache
 We do not expose directly createInternalPlayer in order to prevent the assignation of a custom player id whose uniqueness could not be guaranteed
 
 #### Parameters
@@ -304,7 +317,7 @@ A Player object of the new player
 
 #### Defined in
 
-[glicko2.ts:685](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L685)
+[glicko2.ts:723](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L723)
 
 ___
 
@@ -316,15 +329,17 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `results` | [[`Player`](Player.md)][] |
+| `results` | [`Player`](Player.md)[][] |
 
 #### Returns
 
 [`Race`](Race.md)
 
+A Race object from the results
+
 #### Defined in
 
-[glicko2.ts:613](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L613)
+[glicko2.ts:649](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L649)
 
 ___
 
@@ -340,7 +355,7 @@ Removes all the players from the cache
 
 #### Defined in
 
-[glicko2.ts:620](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L620)
+[glicko2.ts:656](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L656)
 
 ___
 
@@ -348,11 +363,22 @@ ___
 
 ▸ **updateRatings**(`matches`): `void`
 
+Gets all the matches from the race(if is an instance of one), calculates player ratings then cleans all the matches
+
+**`example`**
+```ts
+Glicko2.updateRatings([
+ [Player1, Player2, 1],
+ [Player2, Player4, 0],
+ [Player3, Player1, 1]
+]);
+```
+
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `matches` | [[`Player`](Player.md), [`Player`](Player.md), `number`][] |
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `matches` | [`Race`](Race.md) \| [[`Player`](Player.md), [`Player`](Player.md), `number`][] | Any matches or race during the rating period |
 
 #### Returns
 
@@ -360,4 +386,4 @@ ___
 
 #### Defined in
 
-[glicko2.ts:747](https://github.com/animafps/glicko2.ts/blob/7161b4d/glicko2.ts#L747)
+[glicko2.ts:797](https://github.com/animafps/glicko2.ts/blob/b066135/glicko2.ts#L797)

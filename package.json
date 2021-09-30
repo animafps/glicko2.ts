@@ -1,6 +1,6 @@
 {
     "name": "glicko2.ts",
-    "description": "Implementation of the Glicko2 ranking system in typescript",
+    "description": "Implementation of the Glicko2 ranking system in Typescript",
     "keywords": [
         "glicko",
         "utilities",
@@ -13,34 +13,40 @@
     "types": "dist/glicko2.d.ts",
     "repository": {
         "type": "git",
-        "url": "https://github.com/animafps/glicko2.ts.git"
+        "url": "git+https://github.com/animafps/glicko2.ts.git"
     },
     "devDependencies": {
         "@semantic-release/changelog": "^5.0.1",
-        "@semantic-release/git": "^9.0.0",
-        "@types/jest": "^27.0.1",
-        "@types/node": "^16.4.10",
-        "@typescript-eslint/eslint-plugin": "^4.28.5",
-        "@typescript-eslint/parser": "^4.28.5",
+        "@semantic-release/git": "^9.0.1",
+        "@types/jest": "^27.0.2",
+        "@types/node": "^16.9.6",
+        "@typescript-eslint/eslint-plugin": "^4.31.2",
+        "@typescript-eslint/parser": "^4.31.2",
         "cz-conventional-changelog": "^3.3.0",
         "eslint": "^7.32.0",
-        "jest": "^27.1.0",
-        "prettier": "^2.3.2",
+        "husky": "^7.0.0",
+        "jest": "^27.2.1",
+        "pinst": "^2.1.6",
+        "prettier": "^2.4.1",
         "semantic-release": "^17.4.7",
         "ts-jest": "^27.0.5",
-        "ts-node": "^10.1.0",
-        "typedoc": "^0.21.5",
-        "typedoc-plugin-markdown": "^3.10.4",
-        "typescript": "^4.3.5"
+        "ts-node": "^10.2.1",
+        "typedoc": "^0.22.4",
+        "typedoc-plugin-markdown": "^3.11.1",
+        "typescript": "^4.4.3"
     },
     "scripts": {
-        "doc": "typedoc --out docs --readme none glicko2.ts",
+        "docs": "typedoc",
         "prepare": "tsc",
         "lint": "eslint glicko2.ts",
         "lint:fix": "eslint glicko2.ts --fix",
         "prettier": "prettier -c glicko2.ts",
         "test": "jest",
-        "test:coverage": "jest --collectCoverage"
+        "test:coverage": "jest --collectCoverage",
+        "release": "semantic-release",
+        "postinstall": "husky install",
+        "prepublishOnly": "pinst --disable",
+        "postpublish": "pinst --enable"
     },
     "config": {
         "commitizen": {
@@ -73,5 +79,6 @@
             ],
             "@semantic-release/github"
         ]
-    }
+    },
+    "packageManager": "yarn@3.0.2"
 }

@@ -3,3 +3,11 @@
 .vscode/
 .github/
 docs/
+.yarn/
+jest.config.js
+.husky/
+.yarnrc.yml
+tsconfig.json
+glicko2.ts
+glicko2.test.ts
+typedoc.json
