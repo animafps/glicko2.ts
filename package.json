@@ -38,7 +38,8 @@
         "prettier": "prettier -c glicko2.ts",
         "test": "jest",
         "test:coverage": "jest --collectCoverage",
-        "release": "semantic-release"
+        "release": "semantic-release",
+        "build": "tsc"
     },
     "config": {
         "commitizen": {
