@@ -33,4 +33,4 @@ https://deno.land/x/glicko2/glicko2.ts
 
 Usage documentation is still being written and will get it up soon
 
-[Typedoc generated documentation](docs/README.md)
+[API documentation](https://doc.deno.land/https/deno.land/x/glicko2/glicko2.ts)

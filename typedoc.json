@@ -1,6 +1,0 @@
-{
-    "out": "docs",
-    "readme": "none",
-    "entryPoints": "glicko2.ts",
-    "githubPages": false
-}
