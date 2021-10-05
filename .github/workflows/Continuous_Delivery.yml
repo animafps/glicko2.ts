@@ -15,7 +15,7 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Setup Node.js
-              uses: actions/setup-node@f1f314fca9dfce2769ece7d933488f076716723e # renovate: tag=v1
+              uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c # renovate: tag=v2
               with:
                   node-version: "16"
                   cache: "yarn"
