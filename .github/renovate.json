@@ -1,6 +1,10 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["config:base", "helpers:pinGitHubActionDigests", "group:allNonMajor"],
+	"extends": [
+		"config:base",
+		"helpers:pinGitHubActionDigests",
+		"group:allNonMajor"
+	],
 	"labels": ["Meta: Dependencies"],
 	"schedule": ["before 12pm on Sunday"],
 	"npm": {
@@ -13,9 +17,8 @@
 			}
 		],
 		"lockFileMaintenance": {
-            "enabled": true,
-            "automerge": true
-        }
+			"enabled": true,
+			"automerge": true
+		}
 	}
 }
-

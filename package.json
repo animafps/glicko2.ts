@@ -1,77 +1,80 @@
 {
-    "name": "glicko2.ts",
-    "description": "Implementation of the Glicko2 ranking system in Typescript",
-    "keywords": [
-        "glicko",
-        "utilities",
-        "ranking",
-        "glicko2"
-    ],
-    "version": "1.1.0",
-    "license": "GPL-3.0-or-later",
-    "main": "dist/glicko2.js",
-    "types": "dist/glicko2.d.ts",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/animafps/glicko2.ts.git"
-    },
-    "devDependencies": {
-        "@semantic-release/changelog": "^6.0.0",
-        "@semantic-release/git": "^10.0.0",
-        "@types/jest": "^27.0.2",
-        "@types/node": "^16.9.6",
-        "@typescript-eslint/eslint-plugin": "^4.33.0",
-        "@typescript-eslint/parser": "^4.33.0",
-        "cz-conventional-changelog": "^3.3.0",
-        "eslint": "^7.32.0",
-        "jest": "^27.2.4",
-        "prettier": "^2.4.1",
-        "semantic-release": "^18.0.0",
-        "ts-jest": "^27.0.5",
-        "ts-node": "^10.2.1",
-        "typescript": "^4.4.3"
-    },
-    "scripts": {
-        "prepare": "tsc",
-        "lint": "eslint glicko2.ts",
-        "lint:fix": "eslint glicko2.ts --fix",
-        "prettier": "prettier -c glicko2.ts",
-        "test": "jest",
-        "test:coverage": "jest --collectCoverage",
-        "release": "semantic-release",
-        "build": "tsc"
-    },
-    "config": {
-        "commitizen": {
-            "path": "cz-conventional-changelog"
-        }
-    },
-    "release": {
-        "branches": [
-            "main"
-        ],
-        "plugins": [
-            "@semantic-release/commit-analyzer",
-            "@semantic-release/release-notes-generator",
-            [
-                "@semantic-release/changelog",
-                {
-                    "changelogFile": "changelog.md"
-                }
-            ],
-            "@semantic-release/npm",
-            [
-                "@semantic-release/git",
-                {
-                    "assets": [
-                        "changelog.md",
-                        "package.json"
-                    ],
-                    "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-                }
-            ],
-            "@semantic-release/github"
-        ]
-    },
-    "packageManager": "yarn@3.0.2"
+	"name": "glicko2.ts",
+	"description": "Implementation of the Glicko2 ranking system in Typescript",
+	"keywords": [
+		"glicko",
+		"utilities",
+		"ranking",
+		"glicko2"
+	],
+	"version": "1.1.0",
+	"license": "GPL-3.0-or-later",
+	"main": "dist/glicko2.js",
+	"types": "dist/glicko2.d.ts",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/animafps/glicko2.ts.git"
+	},
+	"devDependencies": {
+		"@semantic-release/changelog": "^6.0.0",
+		"@semantic-release/git": "^10.0.0",
+		"@types/jest": "^27.0.2",
+		"@types/node": "^16.9.6",
+		"@typescript-eslint/eslint-plugin": "^4.33.0",
+		"@typescript-eslint/parser": "^4.33.0",
+		"cz-conventional-changelog": "^3.3.0",
+		"eslint": "^7.32.0",
+		"eslint-config-prettier": "^8.3.0",
+		"jest": "^27.2.4",
+		"prettier": "^2.4.1",
+		"semantic-release": "^18.0.0",
+		"ts-jest": "^27.0.5",
+		"ts-node": "^10.2.1",
+		"typedoc": "^0.22.5",
+		"typescript": "^4.4.3"
+	},
+	"scripts": {
+		"prepare": "tsc",
+		"lint": "eslint . --ext ts",
+		"lint:fix": "eslint . --fix --ext ts",
+		"format": "prettier --write '*.ts'",
+		"test": "jest",
+		"test:coverage": "jest --collectCoverage",
+		"release": "semantic-release",
+		"build": "tsc",
+		"docs": "typedoc"
+	},
+	"config": {
+		"commitizen": {
+			"path": "cz-conventional-changelog"
+		}
+	},
+	"release": {
+		"branches": [
+			"main"
+		],
+		"plugins": [
+			"@semantic-release/commit-analyzer",
+			"@semantic-release/release-notes-generator",
+			[
+				"@semantic-release/changelog",
+				{
+					"changelogFile": "changelog.md"
+				}
+			],
+			"@semantic-release/npm",
+			[
+				"@semantic-release/git",
+				{
+					"assets": [
+						"changelog.md",
+						"package.json"
+					],
+					"message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+				}
+			],
+			"@semantic-release/github"
+		]
+	},
+	"packageManager": "yarn@3.0.2"
 }

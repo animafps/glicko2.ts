@@ -1,15 +1,15 @@
 {
-    "compilerOptions": {
-        "lib": ["es2020"],
-        "module": "commonjs",
-        "target": "es2020",
+	"compilerOptions": {
+		"lib": ["es2020"],
+		"module": "commonjs",
+		"target": "es2020",
 
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true,
-        "declaration": true,
-        "outDir": "dist",
-    },
-    "include": ["glicko2.ts"]
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"declaration": true,
+		"outDir": "dist"
+	},
+	"include": ["glicko2.ts"]
 }

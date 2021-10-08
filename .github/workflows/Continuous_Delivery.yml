@@ -17,8 +17,8 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c # renovate: tag=v2
               with:
-                  node-version: "16"
-                  cache: "yarn"
+                  node-version: '16'
+                  cache: 'yarn'
             - name: Install dependencies
               run: yarn install
             - name: Release
@@ -26,3 +26,24 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
               run: yarn release
+
+    docs:
+        name: Build and Deploy API Docs
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Project
+              uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f # renovate: tag=v2
+            - name: Use Node.js
+              uses: actions/setup-node@270253e841af726300e85d718a5f606959b2903c # renovate: tag=v2
+              with:
+                  node-version: 16
+                  cache: 'yarn'
+            - name: Install dependencies
+              run: yarn install
+            - name: Build Docs
+              run: yarn docs
+            - name: Deploy Docs
+              uses: JamesIves/github-pages-deploy-action@4.1.5
+              with:
+                branch: gh-pages # The branch the action should deploy to.
+                folder: docs # The folder the action should deploy.
