@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/animafps/glicko2.ts/compare/v1.1.0...v1.2.0) (2021-10-09)
+
+
+### Features
+
+* **glicko2.ts:** added feature to be able to use custom volitility algorithms ([f9da4be](https://github.com/animafps/glicko2.ts/commit/f9da4beb3f4debf27644b871a1f3e1bf7131fedb))
+
 # [1.1.0](https://github.com/animafps/glicko2.ts/compare/v1.0.6...v1.1.0) (2021-09-30)
 
 
