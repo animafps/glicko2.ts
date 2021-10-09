@@ -1,6 +1,278 @@
 const scalingFactor = 173.7178
 
 /**
+ * Makes function 'f'
+ * used in {@link volatilityAlgorithms}
+ */
+export function makef(
+	delta: number,
+	v: number,
+	a: number,
+	rd: number,
+	tau: number
+) {
+	return (x: number): number => {
+		return (
+			(Math.exp(x) *
+				(Math.pow(delta, 2) - Math.pow(rd, 2) - v - Math.exp(x))) /
+				(2 * Math.pow(Math.pow(rd, 2) + v + Math.exp(x), 2)) -
+			(x - a) / Math.pow(tau, 2)
+		)
+	}
+}
+
+export interface volatilityArgs {
+	vol: number
+	tau: number
+	rd: number
+	rating: number
+}
+
+/**
+ * Object of various algorithms that can be used by the ranking system
+ */
+export const volatilityAlgorithms = {
+	oldProcedure: (
+		v: number,
+		delta: number,
+		{ rd: vol, rd, tau }: volatilityArgs
+	): number => {
+		const sigma = vol
+		const phi = rd
+
+		let x1, x2, x3, y2, y3
+		let result
+
+		const upper = findUpperFalsep(phi, v, delta, tau)
+
+		const a = Math.log(Math.pow(sigma, 2))
+		let y1 = equation(phi, v, 0, a, tau, delta)
+		if (y1 > 0) {
+			result = upper
+		} else {
+			x1 = 0
+			x2 = x1
+			y2 = y1
+			x1 = x1 - 1
+			y1 = equation(phi, v, x1, a, tau, delta)
+			while (y1 < 0) {
+				x2 = x1
+				y2 = y1
+				x1 = x1 - 1
+				y1 = equation(phi, v, x1, a, tau, delta)
+			}
+			for (let i = 0; i < 21; i++) {
+				x3 = (y1 * (x1 - x2)) / (y2 - y1) + x1
+				y3 = equation(phi, v, x3, a, tau, delta)
+				if (y3 > 0) {
+					x1 = x3
+					y1 = y3
+				} else {
+					x2 = x3
+					y2 = y3
+				}
+			}
+			if (Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2) > upper) {
+				result = upper
+			} else {
+				result = Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2)
+			}
+		}
+		return result
+
+		function equation(
+			phi: number,
+			v: number,
+			x: number,
+			a: number,
+			tau: number,
+			delta: number
+		) {
+			const d = Math.pow(phi, 2) + v + Math.exp(x)
+			return (
+				-(x - a) / Math.pow(tau, 2) -
+				(0.5 * Math.exp(x)) / d +
+				0.5 * Math.exp(x) * Math.pow(delta / d, 2)
+			)
+		}
+
+		function dequation(
+			phi: number,
+			v: number,
+			x: number,
+			tau: number,
+			delta: number
+		) {
+			const d = Math.pow(phi, 2) + v + Math.exp(x)
+			return (
+				-1 / Math.pow(tau, 2) -
+				(0.5 * Math.exp(x)) / d +
+				(0.5 * Math.exp(x) * (Math.exp(x) + Math.pow(delta, 2))) /
+					Math.pow(d, 2) -
+				(Math.pow(Math.exp(x), 2) * Math.pow(delta, 2)) / Math.pow(d, 3)
+			)
+		}
+
+		function findUpperFalsep(
+			phi: number,
+			v: number,
+			delta: number,
+			tau: number
+		) {
+			let x1, x2, x3, y1, y2, y3
+			y1 = dequation(phi, v, 0, tau, delta)
+			if (y1 < 0) {
+				return 1
+			} else {
+				x1 = 0
+				x2 = x1
+				y2 = y1
+				x1 = x1 - 1
+				y1 = dequation(phi, v, x1, tau, delta)
+				while (y1 > 0) {
+					x2 = x1
+					y2 = y1
+					x1 = x1 - 1
+					y1 = dequation(phi, v, x1, tau, delta)
+				}
+				for (let i = 0; i < 21; i++) {
+					x3 = (y1 * (x1 - x2)) / (y2 - y1) + x1
+					y3 = dequation(phi, v, x3, tau, delta)
+					if (y3 > 0) {
+						x1 = x3
+						y1 = y3
+					} else {
+						x2 = x3
+						y2 = y3
+					}
+				}
+				return Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2)
+			}
+		}
+	},
+	newProcedure: (
+		v: number,
+		delta: number,
+		{ vol, tau, rd }: volatilityArgs
+	): number => {
+		//Step 5.1
+		let A = Math.log(Math.pow(vol, 2))
+		const f = makef(delta, v, A, rd, tau)
+		const epsilon = 0.0000001
+
+		//Step 5.2
+		let B, k
+		if (Math.pow(delta, 2) > Math.pow(rd, 2) + v) {
+			B = Math.log(Math.pow(delta, 2) - Math.pow(rd, 2) - v)
+		} else {
+			k = 1
+			while (f(A - k * tau) < 0) {
+				k = k + 1
+			}
+			B = A - k * tau
+		}
+
+		//Step 5.3
+		let fA = f(A)
+		let fB = f(B)
+
+		//Step 5.4
+		let C, fC
+		while (Math.abs(B - A) > epsilon) {
+			C = A + ((A - B) * fA) / (fB - fA)
+			fC = f(C)
+			if (fC * fB < 0) {
+				A = B
+				fA = fB
+			} else {
+				fA = fA / 2
+			}
+			B = C
+			fB = fC
+		}
+		//Step 5.5
+		return Math.exp(A / 2)
+	},
+	newProcedure_mod: (
+		v: number,
+		delta: number,
+		{ vol, tau, rd }: volatilityArgs
+	): number => {
+		//Step 5.1
+		let A = Math.log(Math.pow(vol, 2))
+		const f = makef(delta, v, A, rd, tau)
+		const epsilon = 0.0000001
+
+		//Step 5.2
+		let B, k
+		//XXX mod
+		if (delta > Math.pow(rd, 2) + v) {
+			//XXX mod
+			B = Math.log(delta - Math.pow(rd, 2) - v)
+		} else {
+			k = 1
+			while (f(A - k * tau) < 0) {
+				k = k + 1
+			}
+			B = A - k * tau
+		}
+
+		//Step 5.3
+		let fA = f(A)
+		let fB = f(B)
+
+		//Step 5.4
+		let C, fC
+		while (Math.abs(B - A) > epsilon) {
+			C = A + ((A - B) * fA) / (fB - fA)
+			fC = f(C)
+			if (fC * fB < 0) {
+				A = B
+				fA = fB
+			} else {
+				fA = fA / 2
+			}
+			B = C
+			fB = fC
+		}
+		//Step 5.5
+		return Math.exp(A / 2)
+	},
+	oldProcedure_simple: (
+		v: number,
+		delta: number,
+		{ vol, tau, rating }: volatilityArgs
+	): number => {
+		const a = Math.log(Math.pow(vol, 2))
+		let x0 = a
+		let x1 = 0
+		let d, h1, h2
+
+		while (Math.abs(x0 - x1) > 0.00000001) {
+			// New iteration, so x(i) becomes x(i-1)
+			x0 = x1
+			d = Math.pow(rating, 2) + v + Math.exp(x0)
+			h1 =
+				-(x0 - a) / Math.pow(tau, 2) -
+				(0.5 * Math.exp(x0)) / d +
+				0.5 * Math.exp(x0) * Math.pow(delta / d, 2)
+			h2 =
+				-1 / Math.pow(tau, 2) -
+				(0.5 * Math.exp(x0) * (Math.pow(rating, 2) + v)) /
+					Math.pow(d, 2) +
+				(0.5 *
+					Math.pow(delta, 2) *
+					Math.exp(x0) *
+					(Math.pow(rating, 2) + v - Math.exp(x0))) /
+					Math.pow(d, 3)
+			x1 = x0 - h1 / h2
+		}
+
+		return Math.exp(x1 / 2)
+	},
+}
+
+/**
  * The class for a Race which is a match that includes more than 2 competitors
  */
 export class Race {
@@ -20,7 +292,7 @@ export class Race {
 	}
 
 	/**
-	 * @returns An array of the matches within the race in the format [Player, Player, placement][]
+	 * @returns An array of the matches within the race in the format [{@link Player}, {@link Player}, placement][]
 	 */
 	public getMatches(): [Player, Player, number][] {
 		return this.matches
@@ -29,7 +301,7 @@ export class Race {
 	/**
 	 * Turns an array of race results to an array of matches and outcomes
 	 * @param results An ordered array of the race results with the winner in index 0
-	 * @returns An array of matches and outcomes based on the race results
+	 * @returns An array of matches and outcomes based on the race results. [{@link Player}, {@link Player}, placement][]
 	 */
 	public computeMatches(results: Player[][]): [Player, Player, number][] {
 		const players: { player: Player; position: number }[] = []
@@ -113,251 +385,19 @@ export class Player {
 	 */
 	public id = 0
 	/**
-	 * The volatility algorithm used by the player
+	 * The {@link volatilityAlgorithms} for the player
+	 * @default volatilityAlgorithms.newProcedure
 	 */
-	public volatilityAlgorithm: (v: number, delta: number) => number
-	/**
-	 * Object of various algorithms that can be used by the ranking system
-	 */
-	public readonly volatilityAlgorithms = {
-		oldProcedure: (v: number, delta: number): number => {
-			const sigma = this.__vol
-			const phi = this.__rd
-			const tau = this._tau
-
-			let x1, x2, x3, y2, y3
-			let result
-
-			const upper = findUpperFalsep(phi, v, delta, tau)
-
-			const a = Math.log(Math.pow(sigma, 2))
-			let y1 = equation(phi, v, 0, a, tau, delta)
-			if (y1 > 0) {
-				result = upper
-			} else {
-				x1 = 0
-				x2 = x1
-				y2 = y1
-				x1 = x1 - 1
-				y1 = equation(phi, v, x1, a, tau, delta)
-				while (y1 < 0) {
-					x2 = x1
-					y2 = y1
-					x1 = x1 - 1
-					y1 = equation(phi, v, x1, a, tau, delta)
-				}
-				for (let i = 0; i < 21; i++) {
-					x3 = (y1 * (x1 - x2)) / (y2 - y1) + x1
-					y3 = equation(phi, v, x3, a, tau, delta)
-					if (y3 > 0) {
-						x1 = x3
-						y1 = y3
-					} else {
-						x2 = x3
-						y2 = y3
-					}
-				}
-				if (Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2) > upper) {
-					result = upper
-				} else {
-					result = Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2)
-				}
-			}
-			return result
-
-			function equation(
-				phi: number,
-				v: number,
-				x: number,
-				a: number,
-				tau: number,
-				delta: number
-			) {
-				const d = Math.pow(phi, 2) + v + Math.exp(x)
-				return (
-					-(x - a) / Math.pow(tau, 2) -
-					(0.5 * Math.exp(x)) / d +
-					0.5 * Math.exp(x) * Math.pow(delta / d, 2)
-				)
-			}
-
-			function dequation(
-				phi: number,
-				v: number,
-				x: number,
-				tau: number,
-				delta: number
-			) {
-				const d = Math.pow(phi, 2) + v + Math.exp(x)
-				return (
-					-1 / Math.pow(tau, 2) -
-					(0.5 * Math.exp(x)) / d +
-					(0.5 * Math.exp(x) * (Math.exp(x) + Math.pow(delta, 2))) /
-						Math.pow(d, 2) -
-					(Math.pow(Math.exp(x), 2) * Math.pow(delta, 2)) /
-						Math.pow(d, 3)
-				)
-			}
-
-			function findUpperFalsep(
-				phi: number,
-				v: number,
-				delta: number,
-				tau: number
-			) {
-				let x1, x2, x3, y1, y2, y3
-				y1 = dequation(phi, v, 0, tau, delta)
-				if (y1 < 0) {
-					return 1
-				} else {
-					x1 = 0
-					x2 = x1
-					y2 = y1
-					x1 = x1 - 1
-					y1 = dequation(phi, v, x1, tau, delta)
-					while (y1 > 0) {
-						x2 = x1
-						y2 = y1
-						x1 = x1 - 1
-						y1 = dequation(phi, v, x1, tau, delta)
-					}
-					for (let i = 0; i < 21; i++) {
-						x3 = (y1 * (x1 - x2)) / (y2 - y1) + x1
-						y3 = dequation(phi, v, x3, tau, delta)
-						if (y3 > 0) {
-							x1 = x3
-							y1 = y3
-						} else {
-							x2 = x3
-							y2 = y3
-						}
-					}
-					return Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2)
-				}
-			}
-		},
-		newProcedure: (v: number, delta: number): number => {
-			//Step 5.1
-			let A = Math.log(Math.pow(this.__vol, 2))
-			const f = this._makef(delta, v, A)
-			const epsilon = 0.0000001
-
-			//Step 5.2
-			let B, k
-			if (Math.pow(delta, 2) > Math.pow(this.__rd, 2) + v) {
-				B = Math.log(Math.pow(delta, 2) - Math.pow(this.__rd, 2) - v)
-			} else {
-				k = 1
-				while (f(A - k * this._tau) < 0) {
-					k = k + 1
-				}
-				B = A - k * this._tau
-			}
-
-			//Step 5.3
-			let fA = f(A)
-			let fB = f(B)
-
-			//Step 5.4
-			let C, fC
-			while (Math.abs(B - A) > epsilon) {
-				C = A + ((A - B) * fA) / (fB - fA)
-				fC = f(C)
-				if (fC * fB < 0) {
-					A = B
-					fA = fB
-				} else {
-					fA = fA / 2
-				}
-				B = C
-				fB = fC
-			}
-			//Step 5.5
-			return Math.exp(A / 2)
-		},
-		newProcedure_mod: (v: number, delta: number): number => {
-			//Step 5.1
-			let A = Math.log(Math.pow(this.__vol, 2))
-			const f = this._makef(delta, v, A)
-			const epsilon = 0.0000001
-
-			//Step 5.2
-			let B, k
-			//XXX mod
-			if (delta > Math.pow(this.__rd, 2) + v) {
-				//XXX mod
-				B = Math.log(delta - Math.pow(this.__rd, 2) - v)
-			} else {
-				k = 1
-				while (f(A - k * this._tau) < 0) {
-					k = k + 1
-				}
-				B = A - k * this._tau
-			}
-
-			//Step 5.3
-			let fA = f(A)
-			let fB = f(B)
-
-			//Step 5.4
-			let C, fC
-			while (Math.abs(B - A) > epsilon) {
-				C = A + ((A - B) * fA) / (fB - fA)
-				fC = f(C)
-				if (fC * fB < 0) {
-					A = B
-					fA = fB
-				} else {
-					fA = fA / 2
-				}
-				B = C
-				fB = fC
-			}
-			//Step 5.5
-			return Math.exp(A / 2)
-		},
-		oldProcedure_simple: (v: number, delta: number): number => {
-			const a = Math.log(Math.pow(this.__vol, 2))
-			const tau = this._tau
-			let x0 = a
-			let x1 = 0
-			let d, h1, h2
-
-			while (Math.abs(x0 - x1) > 0.00000001) {
-				// New iteration, so x(i) becomes x(i-1)
-				x0 = x1
-				d = Math.pow(this.__rating, 2) + v + Math.exp(x0)
-				h1 =
-					-(x0 - a) / Math.pow(tau, 2) -
-					(0.5 * Math.exp(x0)) / d +
-					0.5 * Math.exp(x0) * Math.pow(delta / d, 2)
-				h2 =
-					-1 / Math.pow(tau, 2) -
-					(0.5 * Math.exp(x0) * (Math.pow(this.__rating, 2) + v)) /
-						Math.pow(d, 2) +
-					(0.5 *
-						Math.pow(delta, 2) *
-						Math.exp(x0) *
-						(Math.pow(this.__rating, 2) + v - Math.exp(x0))) /
-						Math.pow(d, 3)
-				x1 = x0 - h1 / h2
-			}
-
-			return Math.exp(x1 / 2)
-		},
-	}
-	/**
-	 * @param rating The rating of the new player in Glicko format
-	 * @param rd
-	 * @param vol
-	 * @param tau
-	 */
+	public volatilityAlgorithm: (
+		v: number,
+		delta: number,
+		{ vol, tau, rd, rating }: volatilityArgs
+	) => number = volatilityAlgorithms.newProcedure
 	constructor(rating: number, rd: number, vol: number, tau: number) {
 		this._tau = tau
 		this.__rating = (rating - this.defaultRating) / scalingFactor
 		this.__rd = rd / scalingFactor
 		this.__vol = vol
-		this.volatilityAlgorithm = (v: number, delta: number) => v + delta
 	}
 
 	/**
@@ -451,7 +491,12 @@ export class Player {
 		const delta = this._delta(v)
 
 		//Step 5
-		this.__vol = this.volatilityAlgorithm(v, delta)
+		this.__vol = this.volatilityAlgorithm(v, delta, {
+			vol: this.__vol,
+			tau: this._tau,
+			rd: this.__rd,
+			rating: this.__rating,
+		})
 
 		//Step 6
 		this._preRatingRD()
@@ -527,24 +572,6 @@ export class Player {
 		}
 		return v * tempSum
 	}
-
-	/**
-	 * Makes the f functions for value a and b
-	 */
-	private _makef(delta: number, v: number, a: number) {
-		return (x: number): number => {
-			return (
-				(Math.exp(x) *
-					(Math.pow(delta, 2) -
-						Math.pow(this.__rd, 2) -
-						v -
-						Math.exp(x))) /
-					(2 *
-						Math.pow(Math.pow(this.__rd, 2) + v + Math.exp(x), 2)) -
-				(x - a) / Math.pow(this._tau, 2)
-			)
-		}
-	}
 }
 
 /**
@@ -580,18 +607,15 @@ export class Glicko2 {
 	/**
 	 * The internal default volatility algorithm used by the Glicko2 object when making new players
 	 */
-	private _volatilityAlgorithm: (v: number, delta: number) => number
+	private _volatilityAlgorithm: (
+		v: number,
+		delta: number,
+		{ vol, tau, rd, rating }: volatilityArgs
+	) => number
 	constructor(
 		settings: {
 			/**
-			 * The system constant, tau, which constrains the change in volatility over time,
-			 * needs to be set prior to application of the system. Reasonable choices are
-			 * between 0.3 and 1.2, though the system should be tested to decide which value
-			 * results in greatest predictive accuracy. Smaller values of tau prevent the volatility
-			 * measures from changing by large amounts, which in turn prevent enormous changes
-			 * in ratings based on very improbable results. If the application of Glicko-2 is
-			 * expected to involve extremely improbable collections of game outcomes, then tau
-			 * should be set to a small value, even as small as, say, tau = 0.2
+			 * The system constant, which constrains the change in volatility over time
 			 * @default 0.5
 			 */
 			tau: number
@@ -613,19 +637,20 @@ export class Glicko2 {
 			rd: number
 			/**
 			 * The algorithm to calculate the volatility
-			 * @default "newProcedure"
+			 * @see {volatilityAlgorithms}
+			 * @default volatilityAlgorithms.newProcedure
 			 */
-			volatilityAlgorithm:
-				| 'newProcedure'
-				| 'oldProcedure'
-				| 'newProcedure_mod'
-				| 'oldProcedure_simple'
+			volatilityAlgorithm: (
+				v: number,
+				delta: number,
+				{ vol, tau, rd, rating }: volatilityArgs
+			) => number
 		} = {
 			tau: 0.5,
 			rating: 1500,
 			rd: 350,
 			vol: 0.06,
-			volatilityAlgorithm: 'newProcedure',
+			volatilityAlgorithm: volatilityAlgorithms.newProcedure,
 		}
 	) {
 		this._tau = settings.tau
@@ -636,13 +661,11 @@ export class Glicko2 {
 
 		this._default_vol = settings.vol
 
-		this._volatilityAlgorithm = new Player(1, 1, 1, 1).volatilityAlgorithms[
-			settings.volatilityAlgorithm
-		]
+		this._volatilityAlgorithm = settings.volatilityAlgorithm
 	}
 
 	/**
-	 * @returns A Race object from the results
+	 * @returns A {@link Race} object from the results
 	 */
 	public makeRace(results: Player[][]): Race {
 		return new Race(results)
@@ -657,7 +680,7 @@ export class Glicko2 {
 	}
 
 	/**
-	 * @returns A object with the player index id as the key and the Player object as the member
+	 * @returns A object with the player index id as the key and the {@link Player} object as the member
 	 */
 	public getPlayers(): Record<string, Player> {
 		return this.players
@@ -714,9 +737,9 @@ export class Glicko2 {
 	}
 
 	/**
-	 * Creates a new player and adds it to the cache
+	 * Creates a new {@link Player} and adds it to the cache
 	 * We do not expose directly createInternalPlayer in order to prevent the assignation of a custom player id whose uniqueness could not be guaranteed
-	 * @returns A Player object of the new player
+	 * @returns A {@link Player} object of the new player
 	 */
 	public makePlayer(rating?: number, rd?: number, vol?: number): Player {
 		return this._createInternalPlayer(rating, rd, vol)
@@ -781,8 +804,8 @@ export class Glicko2 {
 	}
 
 	/**
-	 * Gets all the matches from the race(if is an instance of one), calculates player ratings then cleans all the matches
-	 * @param matches Any matches or race during the rating period
+	 * Gets all the matches from the race(if is an instance of one), calculates player ratings
+	 * @param matches Any matches or race during the rating period in format [{@link Player}, {@link Player}, placement][]
 	 * @example
 	 * ```ts
 	 * Glicko2.updateRatings([

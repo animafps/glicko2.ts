@@ -95,4 +95,4 @@ The API documentation is hosted at <https://glicko2.js.org>
 
 ## License
 
-This repository is licensed under [GNU General Public License v3.0](license)
+This repository is licensed under [GNU General Public License v3.0](https://github.com/animafps/glicko2.ts/blob/main/LICENSE)

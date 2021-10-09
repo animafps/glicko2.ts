@@ -35,7 +35,7 @@ describe('Glicko2 Class', () => {
 		const p1 = Glicko.makePlayer()
 		const p2 = Glicko.makePlayer()
 		Glicko.updateRatings([[p1, p2, 0]])
-		expect(p1.getRating() === 1076.6804984311605).toBeTruthy()
+		expect(p1.getRating() === 1337.6891060937023).toBeTruthy()
 	})
 
 	test.todo('Make race')
