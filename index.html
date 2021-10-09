@@ -10,7 +10,7 @@
 </a>
 <p>An Implementation of the Glicko-2 rating system in typescript. The Glicko-2 rating system is a method for assessing a player’s strength in games of skill, such as chess and go. The algorithm is explained by its author, Mark E. Glickman, on <a href="http://glicko.net/glicko.html">http://glicko.net/glicko.html</a>.</p>
 <p>Each player begins with a rating, a rating deviation (accuracy of the rating) and a volatility (speed of rating evolution). These values will evolve according to the outcomes of matches with other players.</p>
-<p>This implementation is fully typed.</p>
+<p>This implementation is fully typed and written in Typescript.</p>
 
 <a href="#installing" id="installing" style="color: inherit; text-decoration: none;">
   <h2>Installing</h2>
@@ -34,6 +34,33 @@
 <a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
   <h2>Usage</h2>
 </a>
-<p>Usage documentation is still being written and will get it up soon</p>
-<p><a href="https://doc.deno.land/https/deno.land/x/glicko2/glicko2.ts">API documentation</a></p>
+<p>First we initiate a ranking manager and create players with initial ratings, rating deviations and volatilities.</p>
+<pre><code class="language-ts"><span class="hl-1">import</span><span class="hl-0"> { Player, Glicko2 } </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-2">&#39;glicko2.ts&#39;</span><br/><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-3">ranking</span><span class="hl-0"> </span><span class="hl-1">=</span><span class="hl-0"> </span><span class="hl-1">new</span><span class="hl-0"> </span><span class="hl-4">Glicko2</span><span class="hl-0">({</span><br/><span class="hl-0">    </span><span class="hl-5">// tau : &quot;Reasonable choices are between 0.3 and 1.2, though the system should</span><br/><span class="hl-0">    </span><span class="hl-5">//        be tested to decide which value results in greatest predictive accuracy&quot;</span><br/><span class="hl-0">    tau : </span><span class="hl-3">0.5</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-5">// rating : default rating</span><br/><span class="hl-0">    rating : </span><span class="hl-3">1500</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-5">//rd : Default rating deviation </span><br/><span class="hl-0">    </span><span class="hl-5">//     small number = good confidence on the rating accuracy</span><br/><span class="hl-0">    rd : </span><span class="hl-3">200</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-5">//vol : Default volatility (expected fluctuation on the player rating)</span><br/><span class="hl-0">    vol : </span><span class="hl-3">0.06</span><br/><span class="hl-0">})</span><br/><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-3">Player1</span><span class="hl-0"> </span><span class="hl-1">=</span><span class="hl-0"> ranking.</span><span class="hl-4">makePlayer</span><span class="hl-0">()</span><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-3">Player2</span><span class="hl-0"> </span><span class="hl-1">=</span><span class="hl-0"> ranking.</span><span class="hl-4">makePlayer</span><span class="hl-0">(</span><span class="hl-3">1400</span><span class="hl-0">, </span><span class="hl-3">30</span><span class="hl-0">, </span><span class="hl-3">0.06</span><span class="hl-0">)</span><br/><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-3">Player3</span><span class="hl-0"> </span><span class="hl-1">=</span><span class="hl-0"> ranking.</span><span class="hl-4">makePlayer</span><span class="hl-0">(</span><span class="hl-3">1500</span><span class="hl-0">, </span><span class="hl-3">100</span><span class="hl-0">, </span><span class="hl-3">0.06</span><span class="hl-0">)</span>
+</code></pre>
+<p>Afterwards we can create a simple match or matches and calculate the ratings</p>
+<pre><code class="language-ts"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-3">matches</span><span class="hl-0"> </span><span class="hl-1">=</span><span class="hl-0"> []</span><br/><span class="hl-0">matches.</span><span class="hl-4">push</span><span class="hl-0">([Player1, Player2, </span><span class="hl-3">1</span><span class="hl-0">]) </span><span class="hl-5">//Player1 won over Player2</span><br/><span class="hl-0">matches.</span><span class="hl-4">push</span><span class="hl-0">([Player1, Player3, </span><span class="hl-3">0.5</span><span class="hl-0">]) </span><span class="hl-5">//A draw between Player1 and Player3</span><br/><span class="hl-0">ranking.</span><span class="hl-4">updateRatings</span><span class="hl-0">(matches)</span>
+</code></pre>
+
+<a href="#when-to-update-rankings" id="when-to-update-rankings" style="color: inherit; text-decoration: none;">
+  <h3>When to update rankings</h3>
+</a>
+<p>You should not update the ranking after each match.
+The typical use of glicko is to calculate the ratings after each tournament (ie collection of matches in a period of time).
+A player rating will evolve after a tournament has finished, but not during the tournament.</p>
+<p>Here is what says Mark E. Glickman about the number of matches in a tournament or rating period (cf. <a href="http://www.glicko.net/glicko/glicko2.pdf">http://www.glicko.net/glicko/glicko2.pdf</a> ) :</p>
+<blockquote>
+<p>The Glicko-2 system works best when the number of games in a rating period is moderate to large, say an average of at least 10-15 games per player in a rating period.</p>
+</blockquote>
+
+<a href="#races" id="races" style="color: inherit; text-decoration: none;">
+  <h3>Races</h3>
+</a>
+<p>Another function that is included in this library is for multiple competitor matches called “Races” where they are competing at the same time.</p>
+<pre><code class="language-ts"><span class="hl-1">const</span><span class="hl-0"> </span><span class="hl-3">race</span><span class="hl-0"> </span><span class="hl-1">=</span><span class="hl-0"> raking.</span><span class="hl-4">makeRace</span><span class="hl-0">(</span><br/><span class="hl-0">    [</span><br/><span class="hl-0">        [Player1], </span><span class="hl-5">//Player1 won the race</span><br/><span class="hl-0">        [Player2, Player3], </span><span class="hl-5">//Player2 and Player3 both tied at 2nd position</span><br/><span class="hl-0">    ]</span><br/><span class="hl-0">)</span><br/><br/><span class="hl-0">ranking.</span><span class="hl-4">updateRatings</span><span class="hl-0">(race)</span>
+</code></pre>
+
+<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
+  <h2>API Documentation</h2>
+</a>
+<p>The API documentation is hosted at <a href="https://glicko2.js.org">https://glicko2.js.org</a></p>
 </div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Exports</a></li></ul></nav><nav class="tsd-navigation secondary menu-sticky"><ul><li class="tsd-kind-class"><a href="classes/Glicko2.html" class="tsd-kind-icon">Glicko2</a></li><li class="tsd-kind-class"><a href="classes/Player.html" class="tsd-kind-icon">Player</a></li><li class="tsd-kind-class"><a href="classes/Race.html" class="tsd-kind-icon">Race</a></li></ul></nav></div></div></div><footer class=""><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li><li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li><li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li><li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="overlay"></div><script src="assets/main.js"></script></body></html>
