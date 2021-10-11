@@ -1045,13 +1045,13 @@ __metadata:
   linkType: hard
 
 "@octokit/plugin-paginate-rest@npm:^2.16.8":
-  version: 2.16.9
-  resolution: "@octokit/plugin-paginate-rest@npm:2.16.9"
+  version: 2.17.0
+  resolution: "@octokit/plugin-paginate-rest@npm:2.17.0"
   dependencies:
-    "@octokit/types": ^6.33.0
+    "@octokit/types": ^6.34.0
   peerDependencies:
     "@octokit/core": ">=2"
-  checksum: 98134c03122fa049f65eebb7b5ddb942bfd9522d42057f531f4c54e4b5bacdea6abad082901bc4b4ecc172dd95875eb9ff5249ca2874a9eb3faf9338bbba1c58
+  checksum: c8753cda6f7ede79d0e9df43a54e56020aa1c9c6887684e0e0d45cb6ee0dcabf460c3e4b8a18edabef711bb269fd826616e99e78dc29fb30d47c210c562603a0
   languageName: node
   linkType: hard
 
@@ -1065,14 +1065,14 @@ __metadata:
   linkType: hard
 
 "@octokit/plugin-rest-endpoint-methods@npm:^5.12.0":
-  version: 5.12.1
-  resolution: "@octokit/plugin-rest-endpoint-methods@npm:5.12.1"
+  version: 5.13.0
+  resolution: "@octokit/plugin-rest-endpoint-methods@npm:5.13.0"
   dependencies:
-    "@octokit/types": ^6.33.0
+    "@octokit/types": ^6.34.0
     deprecation: ^2.3.1
   peerDependencies:
     "@octokit/core": ">=3"
-  checksum: 6ad0a304916be1cf3129b1febd77e1e2b0d3df10ce6b64c027d57d189ae52fca21dab6179ef05e22792407fe5792f0ba2221ca8d4f7a60977c4d4c1e8245cdcd
+  checksum: f331457e4317130adb456b27df2a99609fb54a4dc2da6f87009e567c7325680c901abf18ad08483535bab4ec1c892e4236f4135a2804603aebb12c0698c678c8
   languageName: node
   linkType: hard
 
@@ -1113,7 +1113,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@octokit/types@npm:^6.0.3, @octokit/types@npm:^6.16.1, @octokit/types@npm:^6.33.0":
+"@octokit/types@npm:^6.0.3, @octokit/types@npm:^6.16.1, @octokit/types@npm:^6.34.0":
   version: 6.34.0
   resolution: "@octokit/types@npm:6.34.0"
   dependencies:
