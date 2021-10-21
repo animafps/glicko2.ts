@@ -1,6 +1,7 @@
 /**
  * Makes function 'f'
  * used in {@link volatilityAlgorithms}
+ * @internal
  */
 export function makef(
 	delta: number,
@@ -25,16 +26,12 @@ export interface volatilityArgs {
 	rd: number
 	rating: number
 }
-
-/**
- * Object of various algorithms that can be used by the ranking system
- */
-export const volatilityAlgorithms = {
-	oldProcedure: (
+export namespace volatilityAlgorithms {
+	export function oldProcedure(
 		v: number,
 		delta: number,
 		{ rd: vol, rd, tau }: volatilityArgs
-	): number => {
+	): number {
 		const sigma = vol
 		const phi = rd
 
@@ -147,12 +144,16 @@ export const volatilityAlgorithms = {
 				return Math.exp(((y1 * (x1 - x2)) / (y2 - y1) + x1) / 2)
 			}
 		}
-	},
-	newProcedure: (
+	}
+
+	/**
+	 * The default volatility algorithm for {@link Glicko2}
+	 */
+	export function newProcedure(
 		v: number,
 		delta: number,
 		{ vol, tau, rd }: volatilityArgs
-	): number => {
+	): number {
 		//Step 5.1
 		let A = Math.log(Math.pow(vol, 2))
 		const f = makef(delta, v, A, rd, tau)
@@ -190,12 +191,12 @@ export const volatilityAlgorithms = {
 		}
 		//Step 5.5
 		return Math.exp(A / 2)
-	},
-	newProcedure_mod: (
+	}
+	export function newProcedure_mod(
 		v: number,
 		delta: number,
 		{ vol, tau, rd }: volatilityArgs
-	): number => {
+	): number {
 		//Step 5.1
 		let A = Math.log(Math.pow(vol, 2))
 		const f = makef(delta, v, A, rd, tau)
@@ -235,12 +236,12 @@ export const volatilityAlgorithms = {
 		}
 		//Step 5.5
 		return Math.exp(A / 2)
-	},
-	oldProcedure_simple: (
+	}
+	export function oldProcedure_simple(
 		v: number,
 		delta: number,
 		{ vol, tau, rating }: volatilityArgs
-	): number => {
+	): number {
 		const a = Math.log(Math.pow(vol, 2))
 		let x0 = a
 		let x1 = 0
@@ -267,5 +268,5 @@ export const volatilityAlgorithms = {
 		}
 
 		return Math.exp(x1 / 2)
-	},
+	}
 }

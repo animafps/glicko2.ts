@@ -1,6 +1,7 @@
-import { volatilityAlgorithms, volatilityArgs } from '../algorithms/volatility'
+import { volatilityArgs } from '../algorithms/volatility'
 import { Player } from './player'
 import { Race } from './race'
+import { volatilityAlgorithms } from '../algorithms/volatility'
 
 /**
  * The main class of the rating system
@@ -65,8 +66,7 @@ export class Glicko2 {
 			rd: number
 			/**
 			 * The algorithm to calculate the volatility
-			 * @see {@link volatilityAlgorithms}
-			 * @default volatilityAlgorithms.newProcedure
+			 * @default {@link volatilityAlgorithms.newProcedure}
 			 */
 			volatilityAlgorithm: (
 				v: number,
