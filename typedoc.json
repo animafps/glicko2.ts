@@ -1,7 +1,8 @@
 {
+	"$schema": "https://typedoc.org/schema.json",
 	"cleanOutputDir": true,
-	"emit": true,
-	"entryPoints": ["glicko2.ts"],
+	"emit": "true",
+	"entryPoints": ["src/index.ts"],
 	"excludeExternals": false,
 	"hideGenerator": true,
 	"lightHighlightTheme": "github-light",

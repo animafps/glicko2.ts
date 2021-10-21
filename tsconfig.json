@@ -9,7 +9,7 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"declaration": true,
-		"outDir": "dist"
+		"outDir": "dist/"
 	},
-	"include": ["glicko2.ts"]
+	"include": ["src/"]
 }

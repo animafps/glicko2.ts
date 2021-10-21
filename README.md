@@ -2,6 +2,7 @@
 
 [![Codecov](https://img.shields.io/codecov/c/github/animafps/glicko2.ts?style=flat-square&token=rPThDl0sCn)](https://codecov.io/gh/animafps/glicko2.ts)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/animafps/glicko2.ts/Continuous%20Integration?style=flat-square)](https://github.com/animafps/glicko2.ts/actions)
+[![npm](https://img.shields.io/npm/v/glicko2.ts?color=crimson&logo=npm&style=flat-square)](https://www.npmjs.com/package/glicko2.ts)
 
 ## About
 

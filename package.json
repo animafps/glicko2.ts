@@ -9,8 +9,8 @@
 	],
 	"version": "1.2.0",
 	"license": "GPL-3.0-or-later",
-	"main": "dist/glicko2.js",
-	"types": "dist/glicko2.d.ts",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"author": {
 		"name": "Anima.",
 		"url": "https://animafps.xyz"
@@ -23,6 +23,10 @@
 		"url": "git+https://github.com/animafps/glicko2.ts.git"
 	},
 	"homepage": "https://glicko2.js.org",
+	"files": [
+		"dist",
+		"!dist/*.tsbuildinfo"
+	],
 	"devDependencies": {
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",
