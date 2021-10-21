@@ -15,5 +15,6 @@
 	"name": "glicko2.ts",
 	"out": "./docs/",
 	"readme": "./readme.md",
-	"tsconfig": "./tsconfig.json"
+	"tsconfig": "./tsconfig.json",
+	"categoryOrder": ["Volatility", "*"]
 }

@@ -1,7 +1,6 @@
-import { volatilityArgs } from '../algorithms/volatility'
+import { newProcedure, volatilityArgs } from '../algorithms/volatility'
 import { Player } from './player'
 import { Race } from './race'
-import { volatilityAlgorithms } from '../algorithms/volatility'
 
 /**
  * The main class of the rating system
@@ -27,12 +26,12 @@ export class Glicko2 {
 	 * An object of all the players cached with their key as their id
 	 * @default {}
 	 */
-	public players: Record<string, Player> = {}
+	private players: Record<string, Player> = {}
 	/**
 	 * The number of players in the record
 	 * @default 0
 	 */
-	public players_index = 0
+	private players_index = 0
 	/**
 	 * The internal default volatility algorithm used by the Glicko2 object when making new players
 	 */
@@ -66,7 +65,7 @@ export class Glicko2 {
 			rd: number
 			/**
 			 * The algorithm to calculate the volatility
-			 * @default {@link volatilityAlgorithms.newProcedure}
+			 * @default {@link newProcedure}
 			 */
 			volatilityAlgorithm: (
 				v: number,
@@ -78,7 +77,7 @@ export class Glicko2 {
 			rating: 1500,
 			rd: 350,
 			vol: 0.06,
-			volatilityAlgorithm: volatilityAlgorithms.newProcedure,
+			volatilityAlgorithm: newProcedure,
 		}
 	) {
 		this._tau = settings.tau
@@ -166,7 +165,7 @@ export class Glicko2 {
 
 	/**
 	 * Creates a new {@link Player} and adds it to the cache
-	 * We do not expose directly createInternalPlayer in order to prevent the assignation of a custom player id whose uniqueness could not be guaranteed
+	 * We do not expose {@link Glicko2._createInternalPlayer} directly in order to prevent the assignation of a custom player id whose uniqueness could not be guaranteed
 	 * @returns A {@link Player} object of the new player
 	 */
 	public makePlayer(rating?: number, rd?: number, vol?: number): Player {

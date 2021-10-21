@@ -1,4 +1,4 @@
-import { volatilityAlgorithms, volatilityArgs } from '../algorithms/volatility'
+import { newProcedure, volatilityArgs } from '../algorithms/volatility'
 
 const scalingFactor = 173.7178
 
@@ -36,6 +36,7 @@ export class Player {
 	public outcomes: number[] = []
 	/**
 	 * The default rating of the player
+	 * Used in calculations between the Glicko scales
 	 * @default 1500
 	 */
 	public defaultRating = 1500
@@ -45,14 +46,14 @@ export class Player {
 	 */
 	public id = 0
 	/**
-	 * The {@link volatilityAlgorithms} for the player
-	 * @default volatilityAlgorithms.newProcedure
+	 * The volatility Algorithm for the player
+	 * @default {@link newProcedure}
 	 */
 	public volatilityAlgorithm: (
 		v: number,
 		delta: number,
 		{ vol, tau, rd, rating }: volatilityArgs
-	) => number = volatilityAlgorithms.newProcedure
+	) => number = newProcedure
 
 	constructor(rating: number, rd: number, vol: number, tau: number) {
 		this._tau = tau
