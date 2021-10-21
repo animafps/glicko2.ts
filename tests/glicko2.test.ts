@@ -9,7 +9,7 @@ describe('Glicko2 Class', () => {
 	test('Create player', () => {
 		const Glicko = new Glicko2()
 		const player = Glicko.makePlayer()
-		expect(Glicko.players_index).toBe(1)
+		expect(Object.keys(Glicko.getPlayers()).length).toBe(1)
 		expect(JSON.stringify(Glicko.getPlayers())).toBe(
 			JSON.stringify({
 				'0': player,
