@@ -32,7 +32,7 @@ yarn add glicko2.ts
 
 To install in a Deno environment you can use the package hosted at
 
-<https://deno.land/x/glicko2/src/index.ts>
+<https://deno.land/x/glicko2/deno_dist/mod.ts>
 
 ## Usage
 

@@ -23,6 +23,8 @@ jobs:
             - name: Install Dependencies if Cache Miss
               if: ${{ !steps.cache-restore.outputs.cache-hit }}
               run: yarn --frozen-lockfile
+            - name: Build Deno Dist
+              run: yarn build
             - name: Release
               env:
                   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

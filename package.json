@@ -80,6 +80,7 @@
 				"@semantic-release/git",
 				{
 					"assets": [
+						"deno_dist/**",
 						"changelog.md",
 						"package.json"
 					],
