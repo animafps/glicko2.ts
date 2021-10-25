@@ -1,4 +1,4 @@
-# glicko2.ts
+# ![glicko2.ts](https://socialify.git.ci/animafps/glicko2.ts/image?description=1&language=1&owner=1&theme=Dark)
 
 [![Codecov](https://img.shields.io/codecov/c/github/animafps/glicko2.ts?style=flat-square&token=rPThDl0sCn)](https://codecov.io/gh/animafps/glicko2.ts)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/animafps/glicko2.ts/Continuous%20Integration?style=flat-square)](https://github.com/animafps/glicko2.ts/actions)
