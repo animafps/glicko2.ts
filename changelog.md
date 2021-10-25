@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/animafps/glicko2.ts/compare/v1.2.0...v1.3.0) (2021-10-25)
+
+
+### Features
+
+* added support for teams, enum results, better formatting of updateRatings ([9787709](https://github.com/animafps/glicko2.ts/commit/9787709708a428854a4be59d08dfa04109ea2738))
+
 # [1.2.0](https://github.com/animafps/glicko2.ts/compare/v1.1.0...v1.2.0) (2021-10-09)
 
 
