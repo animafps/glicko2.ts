@@ -79,6 +79,8 @@ jobs:
               run: yarn --frozen-lockfile
             - name: Build
               run: yarn build
+            - run: git config --global user.email "18208134+animafps@users.noreply.github.com"
+            - run: git config --global user.name "GitHub Actions"
             - name: Push Deno Dist
               run: git add .
             - run: "git commit -m 'chore(deno): Deno build results'"
