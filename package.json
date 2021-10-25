@@ -35,6 +35,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.1.0",
 		"@typescript-eslint/parser": "^5.1.0",
 		"cz-conventional-changelog": "^3.3.0",
+		"denoify": "^0.10.5",
 		"eslint": "^8.1.0",
 		"eslint-config-prettier": "^8.3.0",
 		"jest": "^27.3.1",
@@ -53,7 +54,7 @@
 		"test": "jest",
 		"test:coverage": "jest --collectCoverage",
 		"release": "semantic-release",
-		"build": "tsc",
+		"build": "tsc && denoify",
 		"docs": "typedoc"
 	},
 	"config": {
