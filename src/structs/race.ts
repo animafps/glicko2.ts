@@ -1,3 +1,4 @@
+import { matchResult } from '..'
 import { Player } from './player'
 
 /**
@@ -22,16 +23,18 @@ export class Race {
 	/**
 	 * @returns An array of the matches within the race in the format [{@link Player}, {@link Player}, placement][]
 	 */
-	public getMatches(): [Player, Player, number][] {
+	public getMatches(): [Player, Player, matchResult | number][] {
 		return this.matches
 	}
 
 	/**
 	 * Turns an array of race results to an array of matches and outcomes
 	 * @param results An ordered array of the race results with the winner in index 0
-	 * @returns An array of matches and outcomes based on the race results. [{@link Player}, {@link Player}, placement][]
+	 * @returns An array of matches and outcomes based on the race results. [{@link Player}, {@link Player}, {@link matchResult}][]
 	 */
-	public computeMatches(results: Player[][]): [Player, Player, number][] {
+	public computeMatches(
+		results: Player[][]
+	): [Player, Player, matchResult | number][] {
 		const players: { player: Player; position: number }[] = []
 		let position = 0
 

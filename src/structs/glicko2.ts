@@ -1,6 +1,7 @@
 import { newProcedure, volatilityArgs } from '../algorithms/volatility'
 import { Player } from './player'
 import { Race } from './race'
+import { Team } from './team'
 
 /**
  * The main class of the rating system
@@ -145,7 +146,7 @@ export class Glicko2 {
 	public addMatch(
 		player1: { rating: number; rd: number; vol: number; id: number },
 		player2: { rating: number; rd: number; vol: number; id: number },
-		outcome: number
+		outcome: matchResult | number
 	): { pl1: Player; pl2: Player } {
 		const pl1 = this._createInternalPlayer(
 			player1.rating,
@@ -225,34 +226,72 @@ export class Glicko2 {
 	 * @param player2 The second player
 	 * @param outcome The outcome of the first player : 0 = defeat, 1 = victory, 0.5 = draw
 	 */
-	public addResult(player1: Player, player2: Player, outcome: number): void {
+	public addResult(
+		player1: Player,
+		player2: Player,
+		outcome: matchResult | number
+	): void {
 		player1.addResult(player2, outcome)
 		player2.addResult(player1, 1 - outcome)
 	}
 
 	/**
 	 * Gets all the matches from the race(if is an instance of one), calculates player ratings
-	 * @param matches Any matches or race during the rating period in format [{@link Player}, {@link Player}, placement][]
 	 * @example
 	 * ```ts
 	 * Glicko2.updateRatings([
 	 *  [Player1, Player2, 1],
 	 *  [Player2, Player4, 0],
-	 *  [Player3, Player1, 1]
+	 *  [Player3, Player1, 1],
+	 * 	[Team1, Team2, 0],
+	 * 	race
 	 * ]);
 	 * ```
 	 */
-	public updateRatings(matches: [Player, Player, number][] | Race): void {
-		if (matches instanceof Race) {
-			matches = matches.getMatches()
-		}
-		if (typeof matches !== 'undefined') {
-			this.cleanPreviousMatches()
-			for (let i = 0, len = matches.length; i < len; i++) {
-				const match = matches[i]
+	public updateRatings(matches: (playerMatch | Race | teamMatch)[]): void {
+		this.cleanPreviousMatches()
+		matches.forEach((match) => {
+			if (match instanceof Race) {
+				match
+					.getMatches()
+					.forEach((val) => this.addResult(val[0], val[1], val[2]))
+			} else if (
+				match[0] instanceof Player &&
+				match[1] instanceof Player
+			) {
 				this.addResult(match[0], match[1], match[2])
+			} else {
+				this.getTeamMatches(match as teamMatch).forEach((val) =>
+					this.addResult(val[0], val[1], val[2])
+				)
 			}
-		}
+		})
+
 		this.calculatePlayersRatings()
 	}
+
+	/**
+	 * Gets an array of matches between 2 teams and their composite player object
+	 */
+	public getTeamMatches(match: teamMatch) {
+		const finalMatches: playerMatch[] = []
+		const team1Composite = match[0].makeCompositeOpponent()
+		const team2Composite = match[1].makeCompositeOpponent()
+		match[0].getPlayers().forEach((val) => {
+			finalMatches.push([val, team1Composite, match[2]])
+		})
+		match[1].getPlayers().forEach((val) => {
+			finalMatches.push([val, team2Composite, 1 - match[2]])
+		})
+		return finalMatches
+	}
+}
+
+export type playerMatch = [Player, Player, matchResult | number]
+export type teamMatch = [Team, Team, matchResult | number]
+
+export enum matchResult {
+	WIN = 1,
+	LOSS = 0,
+	DRAW = 0.5,
 }

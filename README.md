@@ -12,6 +12,8 @@ Each player begins with a rating, a rating deviation (accuracy of the rating) an
 
 This implementation is fully typed and written in Typescript.
 
+It also includes things that where not in the base Glicko-2 system including [races](https://glicko2.js.org/classes/Race.html) and [teams](https://glicko2.js.org/classes/Team.html) for games that have more than two players.
+
 ## Installing
 
 ### Node(npm/yarn)
@@ -30,7 +32,7 @@ yarn add glicko2.ts
 
 To install in a Deno environment you can use the package hosted at
 
-<https://deno.land/x/glicko2/glicko2.ts>
+<https://deno.land/x/glicko2/src/index.ts>
 
 ## Usage
 

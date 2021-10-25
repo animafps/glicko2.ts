@@ -49,7 +49,7 @@
 		"prepare": "tsc",
 		"lint": "eslint . --ext ts",
 		"lint:fix": "eslint . --fix --ext ts",
-		"format": "prettier --write '*.ts'",
+		"format": "prettier --write '**.ts'",
 		"test": "jest",
 		"test:coverage": "jest --collectCoverage",
 		"release": "semantic-release",
@@ -88,5 +88,8 @@
 			"@semantic-release/github"
 		]
 	},
-	"packageManager": "yarn@3.0.2"
+	"packageManager": "yarn@3.0.2",
+	"volta": {
+		"node": "16.12.0"
+	}
 }
