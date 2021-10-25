@@ -38,7 +38,7 @@ export class Team {
 	}
 
 	/**
-	 * Makes a composite {@link Player} to use in {@link Glicko2.getTeamMatches()}
+	 * Makes a composite {@link Player} to use in {@link Glicko2.getTeamMatches}
 	 */
 	public makeCompositeOpponent() {
 		return new Player(this.rating(), this.rd(), 0, 0)
