@@ -1,3 +1,16 @@
+## [1.3.1](https://github.com/animafps/glicko2.ts/compare/v1.3.0...v1.3.1) (2021-10-25)
+
+
+### Bug Fixes
+
+* fixed deno not publishing correct files ([3a48726](https://github.com/animafps/glicko2.ts/commit/3a48726f1e7b7af7bd242d8e9ead469630e83061))
+
+
+### Reverts
+
+* removed deno in ci ([3c84a4f](https://github.com/animafps/glicko2.ts/commit/3c84a4f3c3b706b9498c3f64eba889bb09c91a1b))
+* reverts e6a763a5b8a8e62bc45f5eab447b0f48e161e9d0 ([67eb09d](https://github.com/animafps/glicko2.ts/commit/67eb09d2984e7fa9ee27cac40921c6c2408aeb52))
+
 # [1.3.0](https://github.com/animafps/glicko2.ts/compare/v1.2.0...v1.3.0) (2021-10-25)
 
 
