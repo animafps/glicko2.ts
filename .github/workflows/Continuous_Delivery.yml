@@ -54,7 +54,7 @@ jobs:
             - name: Build Docs
               run: yarn docs
             - name: Deploy Docs
-              uses: JamesIves/github-pages-deploy-action@0f24da7de3e7e135102609a4c9633b025be8411b # renovate: tag=4.1.5
+              uses: JamesIves/github-pages-deploy-action@60b5e92fe9331f02fa1cdad4d19ddf875be0361c # renovate: tag=4.1.6
               with:
                   branch: gh-pages # The branch the action should deploy to.
                   folder: docs # The folder the action should deploy.
