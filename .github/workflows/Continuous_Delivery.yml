@@ -15,7 +15,7 @@ jobs:
                   fetch-depth: 0
                   persist-credentials: false
             - name: Restore CI Cache
-              uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # renovate: tag=v2.1.6
+              uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
               id: cache-restore
               with:
                   path: node_modules
@@ -43,7 +43,7 @@ jobs:
                   node-version: 16
                   registry-url: https://registry.npmjs.org/
             - name: Restore CI Cache
-              uses: actions/cache@c64c572235d810460d0d6876e9c705ad5002b353 # renovate: tag=v2.1.6
+              uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
               id: cache-restore
               with:
                   path: node_modules
@@ -54,7 +54,7 @@ jobs:
             - name: Build Docs
               run: yarn docs
             - name: Deploy Docs
-              uses: JamesIves/github-pages-deploy-action@60b5e92fe9331f02fa1cdad4d19ddf875be0361c # renovate: tag=4.1.6
+              uses: JamesIves/github-pages-deploy-action@6ce741f5d4e01e15f9ea5ec96df1a43f522c330f # renovate: tag=4.1.7
               with:
                   branch: gh-pages # The branch the action should deploy to.
                   folder: docs # The folder the action should deploy.
