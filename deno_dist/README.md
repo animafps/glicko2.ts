@@ -1,8 +1,9 @@
-# glicko2.ts
+# ![glicko2.ts](https://socialify.git.ci/animafps/glicko2.ts/image?description=1&language=1&owner=1&theme=Dark)
 
-[![Codecov](https://img.shields.io/codecov/c/github/animafps/glicko2.ts?style=flat-square&token=rPThDl0sCn)](https://codecov.io/gh/animafps/glicko2.ts)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/animafps/glicko2.ts/Continuous%20Integration?style=flat-square)](https://github.com/animafps/glicko2.ts/actions)
-[![npm](https://img.shields.io/npm/v/glicko2.ts?color=crimson&logo=npm&style=flat-square)](https://www.npmjs.com/package/glicko2.ts)
+[![Codecov](https://flat.badgen.net/codecov/c/github/animafps/glicko2.ts?icon=codecov)](https://codecov.io/gh/animafps/glicko2.ts)
+[![Continuous Integration](https://flat.badgen.net/github/checks/animafps/glicko2.ts/main/build)](https://github.com/animafps/glicko2.ts/actions/workflows/Continuous_Integration.yml)
+[![npm](https://flat.badgen.net/npm/v/glicko2.ts?label=npm&icon=npm)](https://www.npmjs.com/package/glicko2.ts)
+[![npm](https://flat.badgen.net/npm/dt/glicko2.ts?label=npm%20downloads&icon=npm)](https://www.npmjs.com/package/glicko2.ts)
 
 ## About
 
