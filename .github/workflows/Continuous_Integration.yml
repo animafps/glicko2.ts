@@ -49,7 +49,7 @@ jobs:
             - name: Install Dependencies if Cache Miss
               if: ${{ !steps.cache-restore.outputs.cache-hit }}
               run: yarn --frozen-lockfile
-            - name: Run tsc
+            - name: Build
               run: yarn build
 
     Testing:

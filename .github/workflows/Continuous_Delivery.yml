@@ -5,32 +5,6 @@ on:
             - main
 
 jobs:
-    release:
-        name: Release
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@ec3a7ce113134d7a93b817d10a8272cb61118579 # renovate: tag=v2
-              with:
-                  fetch-depth: 0
-                  persist-credentials: false
-            - name: Restore CI Cache
-              uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
-              id: cache-restore
-              with:
-                  path: node_modules
-                  key: ${{ runner.os }}-16-${{ hashFiles('**/yarn.lock') }}
-            - name: Install Dependencies if Cache Miss
-              if: ${{ !steps.cache-restore.outputs.cache-hit }}
-              run: yarn --frozen-lockfile
-            - name: Build Deno Dist
-              run: yarn build
-            - name: Release
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: yarn release
-
     docs:
         name: Build and Deploy API Docs
         runs-on: ubuntu-latest
