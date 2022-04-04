@@ -1818,9 +1818,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001317":
-  version: 1.0.30001320
-  resolution: "caniuse-lite@npm:1.0.30001320"
-  checksum: d1f52e9d8e2316f2dba4c7adb4c5957e535b07a4a90ac5432bef3a83b4dab487f0efaa6eff3cda75a52bf044d09886ec583299595389fe0a92cf135f4f07692e
+  version: 1.0.30001324
+  resolution: "caniuse-lite@npm:1.0.30001324"
+  checksum: c48bc69d6a0f07f5907465481f313f35c55a6ebf066df233a91c8929a52cfaac380ffad63241ee1cd79a0c001e2af7644a759c10c1470a9c46d194913c81c5c3
   languageName: node
   linkType: hard
 
@@ -2316,8 +2316,8 @@ __metadata:
   linkType: hard
 
 "cosmiconfig-typescript-loader@npm:^1.0.0":
-  version: 1.0.6
-  resolution: "cosmiconfig-typescript-loader@npm:1.0.6"
+  version: 1.0.7
+  resolution: "cosmiconfig-typescript-loader@npm:1.0.7"
   dependencies:
     cosmiconfig: ^7
     ts-node: ^10.6.0
@@ -2325,7 +2325,7 @@ __metadata:
     "@types/node": "*"
     cosmiconfig: ">=7"
     typescript: ">=3"
-  checksum: da1dbdffe341688d1ea953f2ef9d69ea6c480d17922c7eb4b5fcdc0b410bc4db633f261316df78623a1ea45496fb109b90ade974e910114f77a5f150b324f85d
+  checksum: a2bc0005fd0c540aeaa5fd48baa4e63e4d3ea39e69a671a1ee8c3cbd871cc0cc9b33402bd619bbb2a68651a18245fbeeeb6a8d7c09046f43b8f3e5c179d08762
   languageName: node
   linkType: hard
 
@@ -2643,9 +2643,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.84":
-  version: 1.4.96
-  resolution: "electron-to-chromium@npm:1.4.96"
-  checksum: 6a7f97c5fc7080b8739df269a9da0047aee9153807af99e72138dc416ea1dd8ccc167812c66c49d3bb83a55098cd8669ef075515d999aad13b266da72bc98cee
+  version: 1.4.103
+  resolution: "electron-to-chromium@npm:1.4.103"
+  checksum: ae5783cafb1f49e92946416fafc5af45d85e5a6847ce00f4cf4b4d2e54bca1d27b26699ea2cedf5b700c1a0190329e7ec20dc06198daa9f0c343044bc074ae75
   languageName: node
   linkType: hard
 
@@ -3434,8 +3434,8 @@ __metadata:
   linkType: hard
 
 "gauge@npm:^4.0.0":
-  version: 4.0.3
-  resolution: "gauge@npm:4.0.3"
+  version: 4.0.4
+  resolution: "gauge@npm:4.0.4"
   dependencies:
     aproba: ^1.0.3 || ^2.0.0
     color-support: ^1.1.3
@@ -3445,7 +3445,7 @@ __metadata:
     string-width: ^4.2.3
     strip-ansi: ^6.0.1
     wide-align: ^1.1.5
-  checksum: baf982238a5270def90a4895f2e083b5cf8e6f7df20b53b24a932845aec363a6cf411f88b33dcb016a43c9334fdfccd956e4514ee875d70af016bf6fead3d3ae
+  checksum: 788b6bfe52f1dd8e263cda800c26ac0ca2ff6de0b6eee2fe0d9e3abf15e149b651bd27bf5226be10e6e3edb5c4e5d5985a5a1a98137e7a892f75eff76467ad2d
   languageName: node
   linkType: hard
 
@@ -4878,7 +4878,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lilconfig@npm:^2.0.4":
+"lilconfig@npm:^2.0.5":
   version: 2.0.5
   resolution: "lilconfig@npm:2.0.5"
   checksum: f7bb9e42656f06930ad04e583026f087508ae408d3526b8b54895e934eb2a966b7aafae569656f2c79a29fe6d779b3ec44ba577e80814734c8655d6f71cdf2d1
@@ -5001,9 +5001,9 @@ __metadata:
   linkType: hard
 
 "lru-cache@npm:^7.7.1":
-  version: 7.7.1
-  resolution: "lru-cache@npm:7.7.1"
-  checksum: f362c5a2cfa8ad6fe557ec43dc1b7a9695cce84a5652a43ff813609f782f5da576631e7dfad41878bf19a7a69438f38375178635ee80de269aa314280ca2f59e
+  version: 7.7.3
+  resolution: "lru-cache@npm:7.7.3"
+  checksum: 1789743a68a8db052564a9dd020f04ba0712327a43e08babc94f05e1c56ef75a03514cf4acab75ae90e3d5d16ae02c7bf0f34754968dc5b8c2c3bc2d92c21745
   languageName: node
   linkType: hard
 
@@ -5031,8 +5031,8 @@ __metadata:
   linkType: hard
 
 "make-fetch-happen@npm:^10.0.3":
-  version: 10.1.0
-  resolution: "make-fetch-happen@npm:10.1.0"
+  version: 10.1.1
+  resolution: "make-fetch-happen@npm:10.1.1"
   dependencies:
     agentkeepalive: ^4.2.1
     cacache: ^16.0.2
@@ -5050,7 +5050,7 @@ __metadata:
     promise-retry: ^2.0.1
     socks-proxy-agent: ^6.1.1
     ssri: ^8.0.1
-  checksum: fae1c2f255f6467bf6731344c2c04dd0e1f1899d8ae4698d98e2c86131ba899a418746ebc564493b85d1651d43c93b49f7825a2773edda4285a1c4c5e5ba9168
+  checksum: 3f1b0acc2032061a01bb44458e07bbd5721e3fbfb5a1620eef38e7c7d022f2141373fc41a8056685441c70444d94e1479485492ac6e9e8ad5de87ea29ca9d9e4
   languageName: node
   linkType: hard
 
@@ -5790,17 +5790,20 @@ __metadata:
   linkType: hard
 
 "postcss-load-config@npm:^3.0.1":
-  version: 3.1.3
-  resolution: "postcss-load-config@npm:3.1.3"
+  version: 3.1.4
+  resolution: "postcss-load-config@npm:3.1.4"
   dependencies:
-    lilconfig: ^2.0.4
+    lilconfig: ^2.0.5
     yaml: ^1.10.2
   peerDependencies:
+    postcss: ">=8.0.9"
     ts-node: ">=9.0.0"
   peerDependenciesMeta:
+    postcss:
+      optional: true
     ts-node:
       optional: true
-  checksum: 7d187d339f259265bf1de9efff39223b94cb2cabe4610516896a16ec96f713b9b6505b4247d870f134842f8441b442a0fdc33a782b78ae3bec6db2aed4aeafec
+  checksum: 1c589504c2d90b1568aecae8238ab993c17dba2c44f848a8f13619ba556d26a1c09644d5e6361b5784e721e94af37b604992f9f3dc0483e687a0cc1cc5029a34
   languageName: node
   linkType: hard
 
@@ -6934,8 +6937,8 @@ __metadata:
   linkType: hard
 
 "tsup@npm:^5.12.3":
-  version: 5.12.3
-  resolution: "tsup@npm:5.12.3"
+  version: 5.12.4
+  resolution: "tsup@npm:5.12.4"
   dependencies:
     bundle-require: ^3.0.2
     cac: ^6.7.12
@@ -6959,7 +6962,7 @@ __metadata:
   bin:
     tsup: dist/cli-default.js
     tsup-node: dist/cli-node.js
-  checksum: 32fa464ef7f2e95eadfeb4d531620fda32b249749d45008081f86563c8b37966ef8bf0817d6cac204d1f5d10fc56d3f107f0af19252c604847f1f90c00606073
+  checksum: 008e4d1252b69668d9378853fc1f58df1a3f66b97b8d22587bf773b28306325f1f24f2888625558784533bdd2af728726ec081aea8555f87ae8ed78fa122e1e4
   languageName: node
   linkType: hard
 
