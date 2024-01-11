@@ -17,7 +17,7 @@ jobs:
                   node-version: 16
                   registry-url: https://registry.npmjs.org/
             - name: Restore CI Cache
-              uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
+              uses: actions/cache@e12d46a63a90f2fae62d114769bbf2a179198b5c # v3.3.3
               id: cache-restore
               with:
                   path: node_modules
