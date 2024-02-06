@@ -90,7 +90,7 @@ jobs:
               with:
                   fetch-depth: 2
             - name: Download Coverage report
-              uses: actions/download-artifact@f023be2c48cc18debc3bacd34cb396e0295e2869 # renovate: tag=v2
+              uses: actions/download-artifact@eaceaf801fd36c7dee90939fad912460b18a1ffe # v4
               with:
                   name: coverage
                   path: coverage/
