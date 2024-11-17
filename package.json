@@ -68,6 +68,6 @@
 	},
 	"packageManager": "yarn@3.2.0",
 	"dependencies": {
-		"standard-version": "^9.3.2"
+		"commit-and-tag-version": "^9.5.0"
 	}
 }
