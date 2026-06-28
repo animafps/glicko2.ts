@@ -18,7 +18,7 @@ jobs:
                   node-version: 16
                   registry-url: https://registry.npmjs.org/
             - name: Restore CI Cache
-              uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
+              uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               id: cache-restore
               with:
                   path: node_modules
@@ -41,7 +41,7 @@ jobs:
                   node-version: 16
                   registry-url: https://registry.npmjs.org/
             - name: Restore CI Cache
-              uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
+              uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               id: cache-restore
               with:
                   path: node_modules
@@ -64,7 +64,7 @@ jobs:
                   node-version: 16
                   registry-url: https://registry.npmjs.org/
             - name: Restore CI Cache
-              uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed # renovate: tag=v2.1.7
+              uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
               id: cache-restore
               with:
                   path: node_modules
